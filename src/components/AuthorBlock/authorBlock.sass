@@ -1,0 +1,91 @@
+@import '../../style/style.sass'
+
+.author
+    width: 90%
+    margin: 30px auto
+    &__wrapper
+        display: grid
+        grid-template-columns: 35% 55%
+        column-gap: 10%
+        &__photo
+            width: 400px
+            height: 600px
+            object-fit: cover
+    &__name
+        font-size: 32px
+        font-weight: bold
+    &__country
+        font-size: 20px
+    &__description
+        margin-top: 30px
+        font-size: 24px
+        text-align: justify
+    &__button
+        margin-top: 40px
+        margin-right: 20px
+        width: 150px
+        height: 40px
+        border: 1px solid $gray-color
+        border-radius: 10px
+        background-color: white
+        color: $gray-color
+        &:hover
+            border-color: black
+            color: black
+    
+
+@media ( max-width: 1119px )
+    .author
+        &__wrapper
+            grid-template-columns: 45% 50%
+            column-gap: 5%
+            &__photo
+                width: 300px
+                height: 450px
+        &__name
+            font-size: 28px
+        &__country
+            font-size: 18px
+        &__description
+            margin-top: 15px
+            font-size: 20px
+
+
+@media ( max-width: 767px )
+    .author
+        width: 95%
+        &__wrapper
+            display: block
+            &__photo
+                width: 280px
+                height: 420px
+        &__name
+            font-size: 22px
+        &__country
+            font-size: 16px
+        &__description
+            width: 95%
+            font-size: 18px
+        &__button
+            margin-top: 20px
+            margin-right: 15px
+            width: 120px
+            font-size: 14px
+
+
+@media ( max-width: 319px )
+    .author
+        &__wrapper
+            &__photo
+                width: 95%
+                height: 360px
+        &__description
+            font-size: 16px
+        &__button
+            width: 40%
+
+
+// @media ( max-width: 1439px )
+// @media ( max-width: 1119px )
+// @media ( max-width: 767px )
+// @media ( max-width: 319px )

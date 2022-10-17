@@ -22,8 +22,8 @@ const NavBar = observer(() => {
             {user.isAuth ?
                 <Navbar bg="dark" variant="dark">
                 <Container>
-                    <NavLink style={{color: 'white'}} to={FIRST_ROUTE}>MAIN</NavLink>
-                    <Nav>
+                    <NavLink style={{color: 'white', textDecoration: 'none', fontSize: 24, fontWeight: 'bold'}} to={FIRST_ROUTE}>MY BOOKS</NavLink>
+                    <div>
                         <Button
                             variant={"outline-light"}
                             className="me-2"
@@ -47,14 +47,14 @@ const NavBar = observer(() => {
                             className="me-2"
                             onClick={() => navigate(NOTE_ROUTE)}
                             >Прочитать
-                        </Button>
-                        <Button 
-                            variant={"outline-light"} 
-                            onClick={() => logOut()} 
-                            className="ms-2"
-                            >Выйти
-                        </Button>
-                    </Nav>             
+                        </Button>                        
+                    </div> 
+                    <Button 
+                        variant={"outline-light"} 
+                        onClick={() => logOut()} 
+                        className="ms-2"
+                        >Выйти
+                    </Button>           
                 </Container>
             </Navbar>
             :

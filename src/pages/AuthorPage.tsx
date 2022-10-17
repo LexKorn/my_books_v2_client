@@ -1,9 +1,10 @@
 import React from 'react';
+import AuthorBlock from '../components/AuthorBlock/AuthorBlock';
 
 const AuthorPage: React.FC = () => {
     return (
         <div>
-            <h1>AuthorPage</h1>
+            <AuthorBlock />
         </div>
     );
 };

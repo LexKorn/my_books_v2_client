@@ -1,9 +1,10 @@
 import React from 'react';
+import BookBlock from '../components/BookBlock/BookBlock';
 
 const BookPage: React.FC = () => {
     return (
         <div>
-            <h1>BookPage</h1>
+            <BookBlock />
         </div>
     );
 };
