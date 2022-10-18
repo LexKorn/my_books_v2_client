@@ -22,7 +22,7 @@ export interface INote {
     id: number;
     name: string;
     userId: number;
-}
+};
 
 export interface IAuthor {
     id: number;
@@ -31,7 +31,7 @@ export interface IAuthor {
     photo: string;
     userId: number;
     countryId: number;
-}
+};
 
 export interface IBook {
     id: number;
@@ -43,4 +43,10 @@ export interface IBook {
     userId: number;
     countryId: number;
     authorId: number;
-}
+};
+
+export interface ICountry {
+    id: number;
+    name: string;
+    userId: number;
+};

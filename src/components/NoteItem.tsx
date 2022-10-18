@@ -16,7 +16,7 @@ const NoteItem: React.FC<NoteItemProps> = ({note, onClick}) => {
             className="d-flex justify-content-between shadow" 
             style={{padding: 10, marginTop: 15, flexDirection: 'row'}}
         >
-            <div style={{fontSize: 18, lineHeight: '35px'}}>{note.id}. {note.name} создана пользователем {note.userId}</div>
+            <div style={{fontSize: 18, lineHeight: '35px'}}>{note.id}. {note.name} - создана пользователем {note.userId}</div>
             <div>
                 <Button 
                     variant={"outline-secondary"}

@@ -4,9 +4,10 @@ import {Container, Button, Form, Dropdown, Col, Row} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 
 import { Context } from '../index';
-import { createAuthor, fetchAuthor, deleteAuthor, updateAuthor } from '../http/bookAPI';
+import { createAuthor, fetchCountry } from '../http/bookAPI';
 import { AUTHOR_ROUTE, AUTHORS_ROUTE } from '../utils/consts';
-import { IAuthor } from '../types/types';
+import { IAuthor, ICountry } from '../types/types';
+import ModalCountry from '../components/ModalCountry';
 
 
 const AddAuthorPage: React.FC = observer(() => {
@@ -15,18 +16,13 @@ const AddAuthorPage: React.FC = observer(() => {
     const [name, setName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [file, setFile] = useState<string | Blob>(null);
-    const [selectedCountry, setselectedCountry] = useState<number>(2);
-    const [id, setId] = useState<number>(0);
-    const userId: number = 1;
+    const [visible, setVisible] = useState<boolean>(false);
 
-    // useEffect(() => {
-    //     fetchCountries().then(data => book.setCountries(data));
-    // }, []);
+    useEffect(() => {
+        fetchCountry().then(data => book.setCountries(data));
+    }, []);
 
-    // let auth: IAuthor;
-    // auth.
-
-    const selectFile = (e) => { 
+    const selectFile = e => { 
         setFile(e.target.files[0]);
     };
     //: React.ChangeEvent<HTMLInputElement>
@@ -36,32 +32,13 @@ const AddAuthorPage: React.FC = observer(() => {
         formData.append('name', name);
         formData.append('description', description);
         formData.append('photo', file);
-        // formData.append('countryId', `${selectedCountry}`);
-        // formData.append('userId', `${userId}`);
+        formData.append('countryId', book.selectedCountry.id);
 
         createAuthor(formData).then(data => {
             navigate(AUTHORS_ROUTE);
             // navigate(AUTHOR_ROUTE + `/${id}`);
         });
     };
-
-    /*
-    const removeAuthor = () => {
-        deleteAuthor(id).then(data => {
-            navigate(MAIN_ROUTE);
-        });
-    };
-
-    const editAuthor = () => {
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('description', `${description}`);
-
-        updateAuthor(id, formData).then(data => {
-            navigate(MAIN_ROUTE);
-        });
-    };
-    */
 
 
     return (
@@ -88,25 +65,22 @@ const AddAuthorPage: React.FC = observer(() => {
                     />                    
                     <Dropdown className="mt-3 mb-3">
                         <Dropdown.Toggle>Выберите страну</Dropdown.Toggle>
-                        {/* <Dropdown.Toggle>{book.selectedCountry.name || 'Выберите страну'}</Dropdown.Toggle> */}
+                        <Dropdown.Toggle>{book.selectedCountry.name || 'Выберите страну'}</Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item>Россия</Dropdown.Item>                            
-                            {/* {book.countries.map(country => 
+                            {book.countries.map(country => 
                                 <Dropdown.Item 
                                     onClick={() => book.setSelectedCountry(country)} 
                                     key={country.id} >
                                         {country.name}
-                                </Dropdown.Item>
-                            )} */}
-                            <Dropdown.Item>Добавить страну</Dropdown.Item>
+                                </Dropdown.Item>                                
+                            )}
+                            <Dropdown.Item onClick={() => setVisible(true)} >Добавить / удалить страну</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>            
                 </Form>
-
                 <Button variant={"primary"} onClick={addAuthor} className="mt-3">Добавить</Button>           
-                {/* <Button variant={"outline-danger"} onClick={editAuthor}>Обновить</Button>     
-                <Button variant={"outline-danger"} onClick={removeAuthor}>Удалить</Button> */}
             </div>   
+            <ModalCountry show={visible} onHide={() => setVisible(false)} />
         </Container>
     );
 });

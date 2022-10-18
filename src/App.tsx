@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { Spinner } from "react-bootstrap";
 
 import AppRouter from "./components/AppRouter";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavBar/NavBar";
 import { Context } from "./index";
 import { check } from "./http/userAPI";
 
