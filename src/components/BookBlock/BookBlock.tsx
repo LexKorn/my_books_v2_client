@@ -20,7 +20,7 @@ const BookBlock: React.FunctionComponent = () => {
     return (
         <div className='book'>
             <div className="book__wrapper">
-                <img src={book.cover} className='book__wrapper__cover' />
+                <img src={process.env.REACT_APP_API_URL + book.cover} className='book__wrapper__cover' />
                 <div className="book__wrapper__text">                    
                     <div className="book__author">{book.authorId}. Михаил Веллер</div>
                     <div className="book__name">{book.name}</div>

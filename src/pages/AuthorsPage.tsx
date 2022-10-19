@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+import { Container, Spinner } from 'react-bootstrap';
 
 import List from '../components/List';
 import AuthorItem from '../components/AuthorItem';
@@ -10,6 +10,7 @@ import { fetchAuthor } from '../http/bookAPI';
 
 const AuthorsPage: React.FC = () => {
     const [authors, setAuthors] = useState<IAuthor[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -19,8 +20,14 @@ const AuthorsPage: React.FC = () => {
     function getAuthors() {
         fetchAuthor()
             .then(data => setAuthors(data.rows))
-            .catch(err => alert(err.message));
+            .catch(err => alert(err.message))
+            .finally(() => setLoading(false));
     }
+
+    if (loading) {
+        return <Spinner animation={"border"}/>
+    }
+
 
     return (
         <Container style={{width: '70%'}}>

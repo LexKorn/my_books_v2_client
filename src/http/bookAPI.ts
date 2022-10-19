@@ -11,6 +11,11 @@ export const fetchAuthor = async () => {
     return data;
 };
 
+export const fetchOneAuthor = async (id: string) => {
+    const {data} = await $authHost.get('api/author/' + id);
+    return data;
+};
+
 export const deleteAuthor = async (id: number) => {
     const {data} = await $authHost.delete('api/author/' + id);
     return data;

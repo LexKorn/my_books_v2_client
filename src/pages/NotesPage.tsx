@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {Form, Container, Button} from 'react-bootstrap';
+// import { useNavigate } from 'react-router-dom';
+import {Form, Container, Button, Spinner} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 // import {v4 as uuidv4} from 'uuid';
 
@@ -8,7 +8,7 @@ import { INote } from '../types/types';
 import List from '../components/List';
 import NoteItem from '../components/NoteItem';
 import {createNote, deleteNote, fetchNotes} from '../http/noteAPI';
-import {Context} from '../index';
+// import {Context} from '../index';
 
 // import './notesPage.sass';
 
@@ -16,8 +16,9 @@ import {Context} from '../index';
 const NotesPage: React.FC = observer(() => {
     const [value, setValue] = useState<string>('');
     const [notes, setNotes] = useState<INote[]>([]);
-    const {note} = useContext(Context);
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState<boolean>(true);
+    // const {note} = useContext(Context);
+    // const navigate = useNavigate();
 
     const addNote = () => {        //e: React.MouseEvent<HTMLButtonElement>
         createNote(value)
@@ -40,14 +41,19 @@ const NotesPage: React.FC = observer(() => {
     async function getNotes() {
         fetchNotes()
             .then(data => setNotes(data.rows))
-            .catch(err => alert(err.message));
+            .catch(err => alert(err.message))
+            .finally(() => setLoading(false));
+    }
+
+    if (loading) {
+        return <Spinner animation={"border"}/>
     }
 
    
     return (
         // <div className="wrapper" style={{width: '100%', height: '100vh', background: '#222222'}}>
             <Container style={{width: '75%'}}>
-                <Form className="d-flex justify-content-between mt-3">
+                <Form className="d-flex justify-content-between mt-5 mb-5">
                     <Form.Control
                         value={value}
                         onChange={e => setValue(e.target.value)}

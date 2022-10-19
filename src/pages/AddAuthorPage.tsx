@@ -1,12 +1,11 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {Container, Button, Form, Dropdown, Col, Row} from 'react-bootstrap';
+import {Container, Button, Form, Dropdown} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 
 import { Context } from '../index';
 import { createAuthor, fetchCountry } from '../http/bookAPI';
 import { AUTHOR_ROUTE, AUTHORS_ROUTE } from '../utils/consts';
-import { IAuthor, ICountry } from '../types/types';
 import ModalCountry from '../components/ModalCountry';
 
 
@@ -57,6 +56,7 @@ const AddAuthorPage: React.FC = observer(() => {
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         placeholder="Введите описание"
+                        maxLength={1000}
                     />              
                     <label htmlFor="file" className="mt-3">Загрузите фото автора</label>       
                     <Form.Control                        
