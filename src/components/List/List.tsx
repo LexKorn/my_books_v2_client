@@ -1,15 +1,18 @@
 import React from 'react';
 
+import './list.sass';
+
 interface ListProps<T> {
     items: T[];
     renderItem: (item: T) => React.ReactNode;
 };
 
+
 export default function List<T> (props: ListProps<T>) {
     return (
-        <div>
+        <div className="list">
             {props.items.length === 0 ? 
-                <div style={{fontSize: 20}}>Здесь пока ничего нет...</div>
+                <div className="list__empty">Здесь пока ничего нет...</div>
             :
                 props.items.map(props.renderItem)
             }

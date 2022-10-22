@@ -2,7 +2,7 @@ import {makeAutoObservable} from 'mobx';
 
 import { IBook, IAuthor, ICountry } from '../types/types';
 
-export default class BookStore {
+export default class LibraryStore {
     _countries: ICountry[];
     _authors: IAuthor[];
     _books: IBook[];

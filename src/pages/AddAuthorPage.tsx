@@ -4,13 +4,14 @@ import {Container, Button, Form, Dropdown} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 
 import { Context } from '../index';
-import { createAuthor, fetchCountry } from '../http/bookAPI';
-import { AUTHOR_ROUTE, AUTHORS_ROUTE } from '../utils/consts';
+import { createAuthor } from '../http/authorAPI';
+import { fetchCountries } from '../http/countryAPI';
+import { AUTHORS_ROUTE } from '../utils/consts';
 import ModalCountry from '../components/ModalCountry';
 
 
 const AddAuthorPage: React.FC = observer(() => {
-    const {book} = useContext(Context);
+    const {library} = useContext(Context);
     const navigate = useNavigate();
     const [name, setName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
@@ -18,8 +19,8 @@ const AddAuthorPage: React.FC = observer(() => {
     const [visible, setVisible] = useState<boolean>(false);
 
     useEffect(() => {
-        fetchCountry().then(data => book.setCountries(data));
-    }, []);
+        fetchCountries().then(data => library.setCountries(data));
+    }, [visible]);
 
     const selectFile = e => { 
         setFile(e.target.files[0]);
@@ -31,11 +32,11 @@ const AddAuthorPage: React.FC = observer(() => {
         formData.append('name', name);
         formData.append('description', description);
         formData.append('photo', file);
-        formData.append('countryId', book.selectedCountry.id);
+        formData.append('countryId', `${library.selectedCountry.id}`);
 
         createAuthor(formData).then(data => {
+            library.setSelectedCountry({});
             navigate(AUTHORS_ROUTE);
-            // navigate(AUTHOR_ROUTE + `/${id}`);
         });
     };
 
@@ -56,7 +57,6 @@ const AddAuthorPage: React.FC = observer(() => {
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         placeholder="Введите описание"
-                        maxLength={1000}
                     />              
                     <label htmlFor="file" className="mt-3">Загрузите фото автора</label>       
                     <Form.Control                        
@@ -64,12 +64,11 @@ const AddAuthorPage: React.FC = observer(() => {
                         onChange={selectFile}
                     />                    
                     <Dropdown className="mt-3 mb-3">
-                        <Dropdown.Toggle>Выберите страну</Dropdown.Toggle>
-                        <Dropdown.Toggle>{book.selectedCountry.name || 'Выберите страну'}</Dropdown.Toggle>
+                        <Dropdown.Toggle variant={"outline-dark"}>{library.selectedCountry.name || 'Выберите страну'}</Dropdown.Toggle>
                         <Dropdown.Menu>
-                            {book.countries.map(country => 
+                            {library.countries.map(country => 
                                 <Dropdown.Item 
-                                    onClick={() => book.setSelectedCountry(country)} 
+                                    onClick={() => library.setSelectedCountry(country)} 
                                     key={country.id} >
                                         {country.name}
                                 </Dropdown.Item>                                
@@ -78,7 +77,7 @@ const AddAuthorPage: React.FC = observer(() => {
                         </Dropdown.Menu>
                     </Dropdown>            
                 </Form>
-                <Button variant={"primary"} onClick={addAuthor} className="mt-3">Добавить</Button>           
+                <Button variant={"outline-dark"} onClick={addAuthor} className="mt-3">Добавить</Button>           
             </div>   
             <ModalCountry show={visible} onHide={() => setVisible(false)} />
         </Container>

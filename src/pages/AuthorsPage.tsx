@@ -2,10 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { Container, Spinner } from 'react-bootstrap';
 
-import List from '../components/List';
+import List from '../components/List/List';
 import AuthorItem from '../components/AuthorItem';
+import FilterPanel from '../components/FilterPanel/FilterPanel';
 import { IAuthor } from '../types/types';
-import { fetchAuthor } from '../http/bookAPI';
+import { fetchAuthors } from '../http/authorAPI';
 
 
 const AuthorsPage: React.FC = () => {
@@ -18,7 +19,7 @@ const AuthorsPage: React.FC = () => {
     }, []);
   
     function getAuthors() {
-        fetchAuthor()
+        fetchAuthors()
             .then(data => setAuthors(data.rows))
             .catch(err => alert(err.message))
             .finally(() => setLoading(false));
@@ -30,9 +31,10 @@ const AuthorsPage: React.FC = () => {
 
 
     return (
-        <Container style={{width: '70%'}}>
-            <h1>Список добавленных авторов</h1>
-            <List 
+        <Container>
+            <FilterPanel />
+            <h1 style={{textAlign: 'center'}}>Список добавленных авторов:</h1>
+            <List
                 items={authors} 
                 renderItem={(author: IAuthor) => 
                     <AuthorItem 

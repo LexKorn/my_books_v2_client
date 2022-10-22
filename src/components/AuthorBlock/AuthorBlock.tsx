@@ -5,31 +5,34 @@ import { Spinner } from 'react-bootstrap';
 
 import { IAuthor } from '../../types/types';
 import { AUTHORS_ROUTE } from '../../utils/consts';
-import { deleteAuthor, updateAuthor, fetchOneAuthor, fetchCountry } from '../../http/bookAPI';
+import { deleteAuthor, updateAuthor, fetchOneAuthor } from '../../http/authorAPI';
+import { fetchCountries } from '../../http/countryAPI';
 import {Context} from '../../index';
 
 import './authorBlock.sass';
 
 
 const AuthorBlock: React.FunctionComponent = () => {
-    const {book} = useContext(Context);
+    const {library} = useContext(Context);
     const [author, setAuthor] = useState<IAuthor>({});    
     const [loading, setLoading] = useState<boolean>(true);
     const {id} = useParams();
     const navigate = useNavigate();
     
     useEffect(() => {
-        fetchCountry().then(data => book.setCountries(data));
+        fetchCountries().then(data => library.setCountries(data));
         fetchOneAuthor(id)
             .then(data => setAuthor(data))
             .finally(() => setLoading(false));
     }, []);
 
-    const countryAuthor = book.countries.filter(country => country.id === author.countryId);
+    const countryAuthor = library.countries.filter(country => country.id === author.countryId);
 
     const removeAuthor = () => {
-        deleteAuthor(author.id);
-        navigate(AUTHORS_ROUTE);
+        if (window.confirm('Вы действительно хотите удалить автора? Все книги, связанные с ним будут удалены.')) {
+            deleteAuthor(author.id);
+            navigate(AUTHORS_ROUTE);
+        }        
     };
 
     const editAuthor = () => {

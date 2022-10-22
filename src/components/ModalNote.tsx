@@ -1,44 +1,29 @@
 import React, {useState} from 'react';
-import { useNavigate } from 'react-router-dom';
 import {Modal, Button, Form} from 'react-bootstrap';
 
-import {createCountry, deleteCountry} from '../http/countryAPI';
-import { ADD_AUTHOR_ROUTE } from '../utils/consts';
+import { updateNote } from '../http/noteAPI';
 
-interface ModalCountryProps {
+interface ModalNoteProps {
     show: boolean;
     onHide: () => void;
+    idNote: number;
 };
 
 
-const ModalCountry: React.FC<ModalCountryProps> = ({show, onHide}) => {
+const ModalNote: React.FC<ModalNoteProps> = ({show, onHide, idNote}) => {
     const [value, setValue] = useState<string>('');
-    const navigate = useNavigate();
 
-    const addCountry = () => {
+    const editNote = () => {
         if (!value.trim()) {
 			return alert('Поле обязательно для заполнения');
 		}
 
-        createCountry({name: value})
-            .then(data => {
+        updateNote(idNote, value)
+            .then(() => {
                 setValue('');
                 onHide();
-                navigate(ADD_AUTHOR_ROUTE);
             })
-            .catch(err => alert(err.response.data.message));       
-    };
-
-    const removeCountry = () => {
-        if (!value.trim()) {
-			return alert('Поле обязательно для заполнения');
-		}
-
-        deleteCountry(value).then(data => {
-            setValue('');
-            onHide();
-            navigate(ADD_AUTHOR_ROUTE);
-        });
+            .catch(err => alert(err.response.data.message)); 
     };
 
     const keyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -56,7 +41,7 @@ const ModalCountry: React.FC<ModalCountryProps> = ({show, onHide}) => {
             >
             <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Выберите действие со страной
+                    Обновите заметку
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -65,17 +50,16 @@ const ModalCountry: React.FC<ModalCountryProps> = ({show, onHide}) => {
                         value={value}
                         onChange={e => setValue(e.target.value)}
                         onKeyPress={e => keyPress(e)}
-                        placeholder={"Введите название страны"}
+                        placeholder={"Введите название книги"}
                     />
                 </Form>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant={"outline-secondary "} onClick={onHide}>Закрыть</Button>
-                <Button variant={"outline-success"} onClick={addCountry}>Добавить</Button>
-                <Button variant={"outline-danger"} onClick={removeCountry}>Удалить</Button>
+                <Button variant={"outline-danger"} onClick={editNote}>Обновить</Button>
             </Modal.Footer>
         </Modal>
     );
 };
 
-export default ModalCountry;
+export default ModalNote;
