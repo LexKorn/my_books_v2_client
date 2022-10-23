@@ -50,6 +50,11 @@ const NotesPage: React.FC = observer(() => {
     const keyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault();
+            
+            if (!value.trim()) {
+                return alert('Поле обязательно для заполнения');
+            }
+
             addNote();
         }
     };

@@ -2,9 +2,10 @@ import React, {useContext, useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
+// import {observer} from 'mobx-react-lite';
 
 import { IAuthor, IBook, ICountry } from '../../types/types';
-import { MAIN_ROUTE } from '../../utils/consts';
+import { MAIN_ROUTE, AUTHOR_ROUTE } from '../../utils/consts';
 import { deleteBook, updateBook, fetchOneBook } from '../../http/bookAPI';
 import { fetchAuthors } from '../../http/authorAPI';
 import { fetchCountries } from '../../http/countryAPI';
@@ -17,38 +18,46 @@ const BookBlock: React.FunctionComponent = () => {
     const {library} = useContext(Context);
     const [book, setBook] = useState<IBook>({});    
     const [loading, setLoading] = useState<boolean>(true);
-    // const [authorBook, setAuthorBook] = useState<IAuthor[]>([]);
-    // const [countryAuthor, setCountryAuthor] = useState<ICountry[]>([]);
     const {id} = useParams();
     const navigate = useNavigate();
+    // const [authorBook, setAuthorBook] = useState<IAuthor[]>([]);
+    // const [countryAuthor, setCountryAuthor] = useState<ICountry[]>([]);
     
     useEffect(() => {
         fetchAuthors().then(data => library.setAuthors(data.rows));
         fetchCountries().then(data => library.setCountries(data));
         fetchOneBook(id)
             .then(data => setBook(data))
-            // .finally(() => setLoading(false));
+            .finally(() => setLoading(false));
+    }, [id]);
 
-        // setAuthorBook(library.authors.filter(author => author.id === book.authorId));
-        // setCountryAuthor(library.countries.filter(country => country.id === authorBook[0].countryId));
-    }, []);
+    // useEffect(() => {
+    //     fetchAuthors()
+    //         .then(data => library.setAuthors(data.rows))
+    //         .then(() => setAuthorBook(library.authors.filter(author => author.id === book.authorId)))
+    //         .then(() => fetchCountries().then(data => library.setCountries(data)))
+    //         .then(() => setCountryAuthor(library.countries.filter(country => country.id === authorBook[0].countryId)))
+    //         .then(() => fetchOneBook(id).then(data => setBook(data)))
+    //         .finally(() => setLoading(false))        
+    // }, [id]);
 
-    // const authorBook = library.authors.filter(author => author.id === book.authorId);
-    // const countryAuthor = library.countries.filter(country => country.id === authorBook[0].countryId);
-    let authorBook: IAuthor[] = [];
-    let countryAuthor: ICountry[] = [];
+    // useEffect(() => {
+    //     fetchAuthors()
+    //         .then(data => {
+    //             library.setAuthors(data.rows);
+    //             setAuthorBook(library.authors.filter(author => author.id === book.authorId));
+    //         })
+    //         .then(() => fetchCountries().then(data => {
+    //             library.setCountries(data);
+    //             setCountryAuthor(library.countries.filter(country => country.id === authorBook[0].countryId));
+    //         }))
+    //         .then(() => fetchOneBook(id).then(data => setBook(data)))
+    //         .finally(() => setLoading(false))        
+    // }, [id]);
 
-    if (library.authors.length > 0) {
-        // setAuthorBook(library.authors.filter(author => author.id === book.authorId));
-        authorBook = library.authors.filter(author => author.id === book.authorId);
-
-        if (authorBook.length > 0) {
-            // setCountryAuthor(library.countries.filter(country => country.id === authorBook[0].countryId));
-            countryAuthor = library.countries.filter(country => country.id === authorBook[0].countryId);
-            setLoading(false)
-        }
-    }
-
+    const authorBook = library.authors.filter(author => author.id === book.authorId);
+    // const countryAuthor = library.countries.filter(country => country.id === authorBook[0].countryId);  
+    // console.log(authorBook);
     
 
     const removeBook = () => {
@@ -68,11 +77,16 @@ const BookBlock: React.FunctionComponent = () => {
             <div className="book__wrapper">
                 <img src={process.env.REACT_APP_API_URL + book.cover} className='book__wrapper__cover' />
                 <div className="book__wrapper__text">                    
-                    <div className="book__author">{authorBook[0].name}</div>
+                    <div 
+                        className="book__author"
+                        style={{cursor: 'pointer'}}
+                        onClick={() => {navigate(AUTHOR_ROUTE + `/${authorBook[0].id}`)}}
+                        >{authorBook[0].name}
+                    </div>
                     <div className="book__name">{book.name}</div>
-                    <div className="book__country">{countryAuthor[0].name}</div>
+                    {/* <div className="book__country">{countryAuthor[0].name}</div> */}
                     <div className="book__rating">Рейтинг: {book.rating}</div>
-                    <a className="book__link" href={book.link} target="_blank">ссылка</a>
+                    <a className="book__link" href={book.link} target="_blank">Прочитать можно здесь</a>
                     <div className="book__comment">{book.comment}</div>
                 </div>                
             </div>            

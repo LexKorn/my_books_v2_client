@@ -29,7 +29,7 @@ const AuthorBlock: React.FunctionComponent = () => {
     const countryAuthor = library.countries.filter(country => country.id === author.countryId);
 
     const removeAuthor = () => {
-        if (window.confirm('Вы действительно хотите удалить автора? Все книги, связанные с ним будут удалены.')) {
+        if (window.confirm('Вы действительно хотите удалить автора? Все книги, связанные с ним, будут удалены.')) {
             deleteAuthor(author.id);
             navigate(AUTHORS_ROUTE);
         }        
