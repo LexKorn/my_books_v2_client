@@ -10,6 +10,7 @@ import ModalCountry from './Modals/ModalCountry';
 import { IAuthor } from '../types/types';
 
 interface CUAuthorProps {
+    id: number;
     name: string;
     description: string;
     file: string | Blob;
@@ -36,6 +37,12 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
     };
 
     const onClick = () => {
+        if (!name.trim() || !description.trim()) {
+            return alert('Все поля обязательны для заполнения');
+        } else if (!library.selectedCountry.id) {
+            return alert('Страну необходимо указать');
+        }
+
         const formData = new FormData();
         formData.append('name', name);
         formData.append('description', description);
@@ -43,12 +50,12 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
         formData.append('countryId', `${library.selectedCountry.id}`);
 
         if (btnName === 'Добавить') {
-            handler(formData).then(data => {
+            handler(formData).then(() => {
                 library.setSelectedCountry({});
                 navigate(AUTHORS_ROUTE);
             });
         } else {
-            handler(id, formData).then(data => {
+            handler(id, formData).then(() => {
                 library.setSelectedCountry({});
                 navigate(AUTHORS_ROUTE);
                 // navigate(AUTHOR_ROUTE + `/${id}`);

@@ -12,6 +12,7 @@ const AddAuthorPage: React.FC = () => {
     return (
         <>
             <CUAuthor 
+                id={0}
                 name={name}
                 description={description}
                 file={file}

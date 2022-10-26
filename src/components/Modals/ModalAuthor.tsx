@@ -11,15 +11,14 @@ interface ModalAuthorProps {
     nameInit: string;
     descriptionInit: string;
     photoInit: string;
-    countryInit: string;
 };
 
 
-const ModalAuthor: React.FC<ModalAuthorProps> = ({show, onHide, idInit, nameInit, descriptionInit, photoInit, countryInit}) => {
+const ModalAuthor: React.FC<ModalAuthorProps> = ({show, onHide, idInit, nameInit, descriptionInit, photoInit}) => {
     const [name, setName] = useState<string>(nameInit);
     const [description, setDescription] = useState<string>(descriptionInit);
     const [file, setFile] = useState<string | Blob>(photoInit);
-
+    
     return (
         <Modal
             show={show}

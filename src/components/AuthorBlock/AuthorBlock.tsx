@@ -61,7 +61,6 @@ const AuthorBlock: React.FunctionComponent = () => {
                 nameInit={author.name}
                 descriptionInit={author.description}
                 photoInit={author.photo}
-                countryInit={countryAuthor[0].name}
             />
         </div>
     );
