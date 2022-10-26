@@ -1,24 +1,24 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 
-import { IAuthor } from '../types/types';
+import { IBook } from '../types/types';
 
-interface AuthorItemProps {
-    author: IAuthor;
-    onClick: (author: IAuthor) => void;
+interface BookItemProps {
+    book: IBook;
+    onClick: (book: IBook) => void;
 };
 
 
-const AuthorItem: React.FC<AuthorItemProps> = ({author, onClick}) => {    
+const BookItem: React.FC<BookItemProps> = ({book, onClick}) => {    
     return (
         <Card 
             className="d-flex justify-content-between shadow" 
             style={{padding: 10, marginTop: 15, flexDirection: 'row', fontSize: 18, lineHeight: '35px', cursor: 'pointer'}}
-            onClick={() => onClick(author)}
+            onClick={() => onClick(book)}
         >
-            {author.name}
+            {book.authorId} - {book.name}
         </Card>
     );
 };
 
-export default AuthorItem;
+export default BookItem;
