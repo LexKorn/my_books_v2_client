@@ -10,6 +10,7 @@ import { deleteBook, updateBook, fetchOneBook } from '../../http/bookAPI';
 import { fetchAuthors } from '../../http/authorAPI';
 import { fetchCountries } from '../../http/countryAPI';
 import {Context} from '../../index';
+import ModalBook from '../Modals/ModalBook';
 
 import './bookBlock.sass';
 
@@ -20,6 +21,7 @@ const BookBlock: React.FunctionComponent = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const {id} = useParams();
     const navigate = useNavigate();
+    const [visible, setVisible] = useState<boolean>(false);
     // const [authorBook, setAuthorBook] = useState<IAuthor[]>([]);
     // const [countryAuthor, setCountryAuthor] = useState<ICountry[]>([]);
     
@@ -90,8 +92,18 @@ const BookBlock: React.FunctionComponent = () => {
                     <div className="book__comment">{book.comment}</div>
                 </div>                
             </div>            
-            <button className='book__button'>Редактировать</button>
+            <button className='book__button' onClick={() => setVisible(true)}>Редактировать</button>
             <button className='book__button'  onClick={removeBook}>Удалить</button>
+            <ModalBook 
+                show={visible} 
+                onHide={() => setVisible(false)} 
+                idInit={id} 
+                nameInit={book.name}
+                linkInit={book.link}
+                ratingInit={book.rating}
+                commentInit={book.comment}
+                coverInit={book.cover}
+            />
         </div>
     );
 };

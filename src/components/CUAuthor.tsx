@@ -17,7 +17,7 @@ interface CUAuthorProps {
     setName: (name: string) => void;
     setDescription: (description: string) => void;
     setFile: (file: string) => void;
-    handler: (author: IAuthor) => Promise<any>;
+    handler: (id: number, author: IAuthor) => Promise<any>;
     title: string;
     btnName: string;
 };

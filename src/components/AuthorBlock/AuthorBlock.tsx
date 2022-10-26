@@ -19,7 +19,6 @@ const AuthorBlock: React.FunctionComponent = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const {id} = useParams();
     const navigate = useNavigate();
-
     const [visible, setVisible] = useState<boolean>(false);
     
     useEffect(() => {
