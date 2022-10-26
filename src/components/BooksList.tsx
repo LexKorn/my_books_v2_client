@@ -17,7 +17,7 @@ import { BOOK_ROUTE } from '../utils/consts';
 //     renderItem: (item: IBook) => React.ReactNode;
 // };
 
-// import './mainPage.sass';
+import './booksList.sass';
 
 
 export default function BooksList<T> ()  {   //props: ListProps<T>
@@ -49,11 +49,11 @@ export default function BooksList<T> ()  {   //props: ListProps<T>
     return (
         <Container>
             {authorBooks.length === 0 ? '' : <h3 style={{textAlign: 'center'}}>Книги автора:</h3>}            
-            <ListGroup>
+            <ListGroup className="books-list">
                 {authorBooks.map(item =>
                     <ListGroup.Item 
                         key={item.id}
-                        style={{cursor: 'pointer'}}
+                        className="books-list__item"
                         onClick={() => {navigate(BOOK_ROUTE + `/${item.id}`)}}
                         >{item.name}
                     </ListGroup.Item>

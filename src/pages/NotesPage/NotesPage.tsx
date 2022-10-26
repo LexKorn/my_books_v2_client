@@ -6,7 +6,7 @@ import { INote } from '../../types/types';
 import List from '../../components/List/List';
 import NoteItem from '../../components/NoteItem';
 import {createNote, deleteNote, fetchNotes} from '../../http/noteAPI';
-import ModalNote from '../../components/ModalNote';
+import ModalNote from '../../components/Modals/ModalNote';
 
 import './notesPage.sass';
 

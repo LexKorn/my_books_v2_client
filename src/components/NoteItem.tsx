@@ -16,7 +16,7 @@ const NoteItem: React.FC<NoteItemProps> = ({note, onDelete, onEdit}) => {
             className="d-flex justify-content-between shadow" 
             style={{padding: 10, marginTop: 15, flexDirection: 'row', fontSize: 18, lineHeight: '35px'}}
         >
-            <div>{note.name}</div>
+            <div><input type="checkbox" />  {note.name}</div>
             {/* <div>{note.id}. {note.name} - создана пользователем {note.userId}</div> */}
             <div>
                 <Button 
