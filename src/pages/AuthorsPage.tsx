@@ -12,6 +12,7 @@ import { fetchAuthors } from '../http/authorAPI';
 const AuthorsPage: React.FC = () => {
     const [authors, setAuthors] = useState<IAuthor[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [value, setValue] = useState<string>('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,6 +26,18 @@ const AuthorsPage: React.FC = () => {
             .finally(() => setLoading(false));
     }
 
+    const search = (items: IAuthor[], term: string) => {
+        if (term.length === 0) {
+            return items;
+        }
+
+        return items.filter(item => {
+            return item.name.toLowerCase().indexOf(term.toLowerCase()) > -1;
+        });
+    };
+
+    const visibleData = search(authors, value);
+
     if (loading) {
         return <Spinner animation={"border"}/>
     }
@@ -32,10 +45,10 @@ const AuthorsPage: React.FC = () => {
 
     return (
         <Container>
-            <FilterPanel />
+            <FilterPanel value={value} setValue={setValue} />
             <h1 style={{textAlign: 'center'}}>Список добавленных авторов:</h1>
             <List
-                items={authors} 
+                items={visibleData} 
                 renderItem={(author: IAuthor) => 
                     <AuthorItem 
                         onClick={(author) => navigate('/author/' + author.id)} 
