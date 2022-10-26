@@ -7,6 +7,7 @@ import List from '../../components/List/List';
 import NoteItem from '../../components/NoteItem';
 import {createNote, deleteNote, fetchNotes} from '../../http/noteAPI';
 import ModalNote from '../../components/Modals/ModalNote';
+import Message from '../../components/Message';
 
 import './notesPage.sass';
 
@@ -17,6 +18,7 @@ const NotesPage: React.FC = observer(() => {
     const [loading, setLoading] = useState<boolean>(true);
     const [visible, setVisible] = useState<boolean>(false);
     const [idNote, setIdNote] = useState<number>(0);
+    const [show, setShow] = useState<boolean>(false);
 
     useEffect(() => {
         getNotes();
@@ -52,7 +54,8 @@ const NotesPage: React.FC = observer(() => {
             e.preventDefault();
             
             if (!value.trim()) {
-                return alert('Поле обязательно для заполнения');
+                return setShow(true)
+                // return alert('Поле обязательно для заполнения');
             }
 
             addNote();
@@ -66,6 +69,7 @@ const NotesPage: React.FC = observer(() => {
    
     return (
         <Container>
+            <Message text="Поле обязательно для заполнения" show={show} setShow={setShow} />
             <Form className="d-flex justify-content-between mt-5 mb-5 notes-form">
                 <Form.Control
                     value={value}
@@ -85,7 +89,7 @@ const NotesPage: React.FC = observer(() => {
                     />
                 } 
             />
-            <ModalNote show={visible} onHide={() => setVisible(false)} idNote={idNote} />
+            <ModalNote show={visible} onHide={() => setVisible(false)} idNote={idNote} />            
         </Container>            
     );
 });
