@@ -4,7 +4,7 @@ import { Container, Spinner } from 'react-bootstrap';
 
 import List from '../components/List/List';
 import AuthorItem from '../components/AuthorItem';
-import FilterPanel from '../components/FilterPanel/FilterPanel';
+// import FilterPanel from '../components/FilterPanel/FilterPanel';
 import { IAuthor } from '../types/types';
 import { fetchAuthors } from '../http/authorAPI';
 
@@ -13,6 +13,7 @@ const AuthorsPage: React.FC = () => {
     const [authors, setAuthors] = useState<IAuthor[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [value, setValue] = useState<string>('');
+    const [filter, setFilter] = useState<string>('Все');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -36,7 +37,22 @@ const AuthorsPage: React.FC = () => {
         });
     };
 
-    const visibleData = search(authors, value);
+    const filterPost = (items: IAuthor[], filter: string) => {
+        switch (filter) {
+            case 'Отечественные':
+                return items.filter(item => item.countryId === 4 || item.countryId === 14);
+            case 'Зарубежные':
+                return items.filter(item => item.countryId !== 4 && item.countryId !== 14);
+            case 'Любимые':               
+                return items.filter(item => item.countryId > 4); //item.rating 
+            case 'Все':
+                return items;
+            default:
+                return items;
+        }
+    }
+
+    const visibleData = filterPost(search(authors, value), filter);
 
     if (loading) {
         return <Spinner animation={"border"}/>
@@ -45,7 +61,22 @@ const AuthorsPage: React.FC = () => {
 
     return (
         <Container>
-            <FilterPanel value={value} setValue={setValue} />
+            {/* <FilterPanel value={value} setValue={setValue} /> */}
+            <div className='filter'>
+                <button className='filter__btn' onClick={(e) => setFilter('Отечественные')}>Отечественные</button>
+                <button className='filter__btn' onClick={(e) => setFilter('Зарубежные')}>Зарубежные</button>
+                <button className='filter__btn' onClick={(e) => setFilter('Любимые')}>Любимые</button>
+                <button className='filter__btn' onClick={(e) => setFilter('Все')}>Все</button>           
+                {/* <button className='filter__btn' onClick={() => sortHandler()}>Упорядочить</button>      */}
+            </div>
+            <input 
+                className='search' 
+                type='text' 
+                placeholder='Начните вводить искомое слово' 
+                value={value}
+                onChange={e => setValue(e.target.value)}
+            />
+
             <h1 style={{textAlign: 'center'}}>Список добавленных авторов:</h1>
             <List
                 items={visibleData} 

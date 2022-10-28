@@ -87,7 +87,7 @@ const BookBlock: React.FunctionComponent = () => {
                     </div>
                     <div className="book__name">{book.name}</div>
                     {/* <div className="book__country">{countryAuthor[0].name}</div> */}
-                    <div className="book__rating">Рейтинг: {book.rating}</div>
+                    <div className="book__rating">{book.rating}</div>
                     <a className="book__link" href={book.link} target="_blank">Прочитать можно здесь</a>
                     <div className="book__comment">{book.comment}</div>
                 </div>                
