@@ -52,6 +52,7 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
         formData.append('comment', comment);
         formData.append('cover', file);
         formData.append('authorId', `${library.selectedAuthor.id}`);
+        formData.append('countryId', `${library.selectedAuthor.countryId}`);
 
         if (btnName === 'Добавить') {
             handler(formData).then(data => {

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { IAuthor } from '../../types/types';
+import { IAuthor, IBook } from '../../types/types';
 
 import './filterPanel.sass';
 
@@ -16,7 +16,7 @@ const FilterPanel:React.FC<FilterPanelProps> = ({value, setValue}) => {
 
     // console.log(filter);
     
-    const search = (items: IAuthor[], term: string) => {
+    const search = (items: IAuthor[] | IBook[], term: string) => {
         if (term.length === 0) {
             return items;
         }
@@ -39,25 +39,35 @@ const FilterPanel:React.FC<FilterPanelProps> = ({value, setValue}) => {
             default:
                 return items;
         }
-    }
+    };
 
-    const visibleData = filterPost(search(authors, value), filter);
+    const sort = (items: IAuthor[]) => {        
+        let sortItems: IAuthor[] = [];
+
+        sortItems = [...items].sort((a, b) => {
+            return a.name > b.name ? 1 : -1;
+        });
+
+        return sortItems;
+    };
+
+    const visibleData = sort(filterPost(search(authors, value), filter));
 
     // Sort
     // const sortHandler = () => {        
-    //     // let sortLinks = [];
+    //     let sortLinks = [];
   
-        // if (directionSort) {
-        //   sortLinks = [...links].sort((a, b) => {
-        //     return a[e] > b[e] ? 1 : -1;
-        //   });
-        // } else {
-        //   sortLinks = [...links].sort((a, b) => {
-        //     return a[e] < b[e] ? 1 : -1;
-        //   });
-        // }
+    //     if (directionSort) {
+    //       sortLinks = [...links].sort((a, b) => {
+    //         return a[e] > b[e] ? 1 : -1;
+    //       });
+    //     } else {
+    //       sortLinks = [...links].sort((a, b) => {
+    //         return a[e] < b[e] ? 1 : -1;
+    //       });
+    //     }
   
-        // setLinks(sortLinks);
+    //     setLinks(sortLinks);
     //     setDirectionSort(!directionSort);
     //     console.log(directionSort);
     // };

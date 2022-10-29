@@ -44,7 +44,7 @@ const AuthorsPage: React.FC = () => {
             case 'Зарубежные':
                 return items.filter(item => item.countryId !== 4 && item.countryId !== 14);
             case 'Любимые':               
-                return items.filter(item => item.countryId > 4); //item.rating 
+                return items;
             case 'Все':
                 return items;
             default:
@@ -52,7 +52,17 @@ const AuthorsPage: React.FC = () => {
         }
     }
 
-    const visibleData = filterPost(search(authors, value), filter);
+    const sort = (items: IAuthor[]) => {        
+        let sortItems: IAuthor[] = [];
+
+        sortItems = [...items].sort((a, b) => {
+            return a.name > b.name ? 1 : -1;
+        });
+
+        return sortItems;
+    };
+
+    const visibleData = sort(filterPost(search(authors, value), filter));
 
     if (loading) {
         return <Spinner animation={"border"}/>
@@ -66,8 +76,7 @@ const AuthorsPage: React.FC = () => {
                 <button className='filter__btn' onClick={(e) => setFilter('Отечественные')}>Отечественные</button>
                 <button className='filter__btn' onClick={(e) => setFilter('Зарубежные')}>Зарубежные</button>
                 <button className='filter__btn' onClick={(e) => setFilter('Любимые')}>Любимые</button>
-                <button className='filter__btn' onClick={(e) => setFilter('Все')}>Все</button>           
-                {/* <button className='filter__btn' onClick={() => sortHandler()}>Упорядочить</button>      */}
+                <button className='filter__btn' onClick={(e) => setFilter('Все')}>Все</button> 
             </div>
             <input 
                 className='search' 
