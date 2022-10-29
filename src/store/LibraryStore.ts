@@ -8,6 +8,8 @@ export default class LibraryStore {
     _books: IBook[];
     _selectedCountry: ICountry;
     _selectedAuthor: IAuthor;
+    _visibleAuthors: IAuthor[];
+    _visibleBooks: IBook[];
 
     constructor() {
        this._countries = [];
@@ -15,6 +17,8 @@ export default class LibraryStore {
        this._books = [];
        this._selectedCountry = {};
        this._selectedAuthor = {};
+       this._visibleAuthors = [];
+       this._visibleBooks = [];
 
        makeAutoObservable(this); 
     };
@@ -34,6 +38,12 @@ export default class LibraryStore {
     setSelectedAuthor(author: IAuthor) {
         this._selectedAuthor = author;
     };
+    setVisibleAuthors(visibleAuthors: IAuthor[]) {
+        this._visibleAuthors = visibleAuthors;
+    };
+    setVisibleBooks(visibleBooks: IBook[]) {
+        this._visibleBooks = visibleBooks;
+    };
 
 
     get countries() {
@@ -51,4 +61,10 @@ export default class LibraryStore {
     get selectedAuthor() {
         return this._selectedAuthor;
     }
+    get visibleAuthors() {
+        return this._visibleAuthors;
+    };
+    get visibleBooks() {
+        return this._visibleBooks;
+    };
 };

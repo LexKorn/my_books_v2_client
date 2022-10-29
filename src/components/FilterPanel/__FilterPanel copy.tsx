@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {observer} from 'mobx-react-lite';
 
 import { IAuthor, IBook } from '../../types/types';
@@ -11,14 +11,14 @@ interface FilterPanelProps {
     setValue: (value: string) => void;
     filter: string;
     setFilter: (value: string) => void;
-    elems: (IAuthor | IBook)[];
+    elems: IAuthor[];
 };
 
 
 const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filter, setFilter, elems}) => {
     const {library} = useContext(Context);
 
-    const search = (items: (IAuthor | IBook)[], term: string) => {
+    const search = (items: IAuthor[], term: string) => {
         if (term.length === 0) {
             return items;
         }
@@ -28,14 +28,14 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
         });
     };
 
-    const filterPost = (items: (IAuthor | IBook)[], filter: string) => {
+    const filterPost = (items: IAuthor[], filter: string) => {
         switch (filter) {
             case 'Отечественные':
-            return items.filter(item => item.countryId === 4 || item.countryId === 14);
+                return items.filter(item => item.countryId === 4 || item.countryId === 14);
             case 'Зарубежные':
                 return items.filter(item => item.countryId !== 4 && item.countryId !== 14);
             case 'Любимые':               
-                return elems[0].authorId ? items.filter(item => item.rating > 8) : items;
+                return items;
             case 'Все':
                 return items;
             default:
@@ -43,8 +43,8 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
         }
     };
 
-    const sort = (items: (IAuthor | IBook)[]) => {        
-        let sortItems: (IAuthor | IBook)[] = [];
+    const sort = (items: IAuthor[]) => {        
+        let sortItems: IAuthor[] = [];
 
         sortItems = [...items].sort((a, b) => {
             return a.name > b.name ? 1 : -1;
@@ -53,11 +53,7 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
         return sortItems;
     };
 
-    if (elems[0].authorId) {
-        library.setVisibleBooks(sort(filterPost(search(elems, value), filter)));
-    } else {
-        library.setVisibleAuthors(sort(filterPost(search(elems, value), filter)));
-    }
+    library.setVisibleAuthors(sort(filterPost(search(elems, value), filter)));
 
 
     return (
