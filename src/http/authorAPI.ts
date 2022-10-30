@@ -11,7 +11,7 @@ export const fetchAuthors = async () => {
     return data;
 };
 
-export const fetchOneAuthor = async (id: string) => {
+export const fetchOneAuthor = async (id: number) => {
     const {data} = await $authHost.get('api/author/' + id);
     return data;
 };

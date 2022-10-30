@@ -24,7 +24,7 @@ const NavBar = observer(() => {
             {user.isAuth ?
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top">
                     <Container>
-                        <NavLink to={FIRST_ROUTE}>MY BOOKS</NavLink>
+                        <NavLink to={FIRST_ROUTE}>МОИ КНИГИ</NavLink>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav" className='justify-content-around'>
                                 <div className='buttons'>

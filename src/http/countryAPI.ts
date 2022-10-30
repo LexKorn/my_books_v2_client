@@ -11,7 +11,7 @@ export const fetchCountries = async () => {
     return data;
 };
 
-export const deleteCountry = async (id: string) => {
+export const deleteCountry = async (id: number) => {
     const {data} = await $authHost.delete('api/country/' + id);
     return data;
 };

@@ -45,8 +45,8 @@ const MainPage: React.FC = observer(() => {
                 items={library.visibleBooks} 
                 renderItem={(book: IBook) => 
                     <BookItem 
-                        onClick={(book) => navigate('/book/' + book.id)} 
                         book={book} 
+                        onClick={(book) => navigate('/book/' + book.id)}                         
                         key={book.id} 
                     />
                 } 

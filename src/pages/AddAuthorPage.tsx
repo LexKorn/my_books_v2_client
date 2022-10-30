@@ -7,7 +7,7 @@ import { createAuthor } from '../http/authorAPI';
 const AddAuthorPage: React.FC = () => {
     const [name, setName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
-    const [file, setFile] = useState<string | Blob>(null);
+    const [file, setFile] = useState<string | Blob>('');
     
     return (
         <>

@@ -10,7 +10,7 @@ import './style/style.sass';
 
 type RootStateContextValue = {
   user: UserStore;
-  note: NoteStore;
+  // note: NoteStore;
   library: LibraryStore;
 };
 
@@ -22,7 +22,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <Context.Provider value={{
     user: new UserStore(),
-    note: new NoteStore(),
+    // note: new NoteStore(),
     library: new LibraryStore()
   }}>
     <App />

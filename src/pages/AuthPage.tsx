@@ -24,8 +24,7 @@ const AuthPage = observer(() => {
             } else {
                 data = await registration(username, password);
             }
-    
-            // user.setIsUser(data.id);
+
             user.setIsAuth(true);
             navigate(MAIN_ROUTE);
         } catch(err) {

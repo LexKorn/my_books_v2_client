@@ -10,7 +10,7 @@ const AddBookPage: React.FC = observer(() => {
     const [link, setLink] = useState<string>('');
     const [rating, setRating] = useState<string>('');
     const [comment, setComment] = useState<string>('');
-    const [file, setFile] = useState<string | Blob>(null);
+    const [file, setFile] = useState<string | Blob>('');
 
     return (
         <>

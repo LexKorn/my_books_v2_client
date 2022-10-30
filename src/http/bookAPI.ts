@@ -11,7 +11,7 @@ export const fetchBooks = async () => {
     return data;
 };
 
-export const fetchOneBook = async (id: string) => {
+export const fetchOneBook = async (id: number) => {
     const {data} = await $authHost.get('api/book/' + id);
     return data;
 };

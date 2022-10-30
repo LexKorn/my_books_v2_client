@@ -7,7 +7,7 @@ import List from '../../components/List/List';
 import NoteItem from '../../components/NoteItem';
 import {createNote, deleteNote, fetchNotes} from '../../http/noteAPI';
 import ModalNote from '../../components/Modals/ModalNote';
-import Message from '../../components/Message';
+// import Message from '../../components/Message';
 
 import './notesPage.sass';
 
@@ -18,7 +18,7 @@ const NotesPage: React.FC = observer(() => {
     const [loading, setLoading] = useState<boolean>(true);
     const [visible, setVisible] = useState<boolean>(false);
     const [idNote, setIdNote] = useState<number>(0);
-    const [show, setShow] = useState<boolean>(false);
+    // const [show, setShow] = useState<boolean>(false);
 
     useEffect(() => {
         getNotes();
@@ -51,13 +51,11 @@ const NotesPage: React.FC = observer(() => {
       
     const keyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            e.preventDefault();
-            
-            if (!value.trim()) {
-                return setShow(true)
-                // return alert('Поле обязательно для заполнения');
+            e.preventDefault();           
+            if (!value.trim()) {               
+                return alert('Поле обязательно для заполнения');
+                // return setShow(true)
             }
-
             addNote();
         }
     };
@@ -69,15 +67,16 @@ const NotesPage: React.FC = observer(() => {
    
     return (
         <Container>
-            <Message text="Поле обязательно для заполнения" show={show} setShow={setShow} />
+            {/* <Message text="Поле обязательно для заполнения" show={show} setShow={setShow} /> */}
+            <h1 style={{textAlign: 'center'}}>Список книг, которые планирую прочитать:</h1>
             <Form className="d-flex justify-content-between mt-5 mb-5 notes-form">
                 <Form.Control
                     value={value}
                     onChange={e => setValue(e.target.value)}
                     onKeyPress={e => keyPress(e)}
-                    placeholder={"Введите название книги"}
+                    placeholder={"Добавить книгу"}
                 />
-            </Form>
+            </Form>            
             <List 
                 items={notes} 
                 renderItem={(note: INote) => 
