@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { Container, Spinner } from 'react-bootstrap';
 import {observer} from 'mobx-react-lite';
+import {Helmet} from "react-helmet";
 
 import List from '../components/List/List';
 import BookItem from '../components/BookItem';
@@ -37,20 +38,24 @@ const MainPage: React.FC = observer(() => {
     }
 
 
-    return (
+    return (        
         <Container>
+            <Helmet>
+                <title>Main Page</title>
+                <meta name="description" content="Портал прочитанных книг" />
+            </Helmet>
             <FilterPanel value={value} setValue={setValue} filter={filter} setFilter={setFilter} elems={books} />
             <h1 style={{textAlign: 'center'}}>Список добавленных книг:</h1>
-            <List 
-                items={library.visibleBooks} 
-                renderItem={(book: IBook) => 
-                    <BookItem 
-                        book={book} 
-                        onClick={(book) => navigate('/book/' + book.id)}                         
-                        key={book.id} 
-                    />
-                } 
-            />
+                <List 
+                    items={library.visibleBooks} 
+                    renderItem={(book: IBook) => 
+                        <BookItem 
+                            book={book} 
+                            onClick={(book) => navigate('/book/' + book.id)}                         
+                            key={book.id} 
+                        />
+                    } 
+                />           
         </Container>
     );
 });

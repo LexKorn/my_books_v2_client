@@ -7,6 +7,7 @@ import { Context } from '../index';
 import { fetchAuthors } from '../http/authorAPI';
 import { ADD_AUTHOR_ROUTE, MAIN_ROUTE } from '../utils/consts';
 import {IBook} from '../types/types';
+import unknownAuthor from '../assets/unknown_author.jpg';
 
 interface CUBookProps {
     id: number;
@@ -35,7 +36,7 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
     }, []);    
 
     const selectFile = e => { 
-        setFile(e.target.files[0]);
+        setFile(e.target.files[0]);                
     };
 
     const onClick = () => {
@@ -43,6 +44,8 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
             return alert('Все поля обязательны для заполнения');
         } else if (!library.selectedAuthor.id) {
             return alert('Автора необходимо указать');
+        } else if (!file) {
+            return alert('Обложку необходимо загрузить');
         }
 
         const formData = new FormData();

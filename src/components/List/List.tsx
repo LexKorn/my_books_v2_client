@@ -1,4 +1,5 @@
 import React from 'react';
+// import { TransitionGroup } from 'react-transition-group';
 
 import './list.sass';
 
@@ -15,7 +16,9 @@ export default function List<T> (props: ListProps<T>) {
                 <div className="list__empty">Здесь пока ничего нет...</div>
             :
                 props.items.map(props.renderItem)
-            }
+            }           
         </div>
     );
 };
+
+{/* <TransitionGroup component={null} ></TransitionGroup> */}

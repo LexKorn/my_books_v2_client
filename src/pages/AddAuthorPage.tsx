@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {Helmet} from "react-helmet";
 
 import CUAuthor from '../components/CUAuthor';
 import { createAuthor } from '../http/authorAPI';
@@ -11,6 +12,10 @@ const AddAuthorPage: React.FC = () => {
     
     return (
         <>
+            <Helmet>
+                <title>Add Author Page</title>
+                <meta name="description" content="Добавить автора" />
+            </Helmet>
             <CUAuthor 
                 id={0}
                 name={name}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { observer } from 'mobx-react-lite';
+import {Helmet} from "react-helmet";
 
 import { createBook } from '../http/bookAPI';
 import CUBook from '../components/CUBook';
@@ -14,6 +15,10 @@ const AddBookPage: React.FC = observer(() => {
 
     return (
         <>
+            <Helmet>
+                <title>Add Book Page</title>
+                <meta name="description" content="Добавить книгу" />
+            </Helmet>
             <CUBook 
                 id={0}
                 name={name}

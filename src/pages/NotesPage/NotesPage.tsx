@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {Form, Container, Spinner} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
+import {Helmet} from "react-helmet";
 
 import { INote } from '../../types/types';
 import List from '../../components/List/List';
 import NoteItem from '../../components/NoteItem';
 import {createNote, deleteNote, fetchNotes} from '../../http/noteAPI';
 import ModalNote from '../../components/Modals/ModalNote';
-// import Message from '../../components/Message';
 
 import './notesPage.sass';
 
@@ -18,7 +18,6 @@ const NotesPage: React.FC = observer(() => {
     const [loading, setLoading] = useState<boolean>(true);
     const [visible, setVisible] = useState<boolean>(false);
     const [idNote, setIdNote] = useState<number>(0);
-    // const [show, setShow] = useState<boolean>(false);
 
     useEffect(() => {
         getNotes();
@@ -54,7 +53,6 @@ const NotesPage: React.FC = observer(() => {
             e.preventDefault();           
             if (!value.trim()) {               
                 return alert('Поле обязательно для заполнения');
-                // return setShow(true)
             }
             addNote();
         }
@@ -67,7 +65,10 @@ const NotesPage: React.FC = observer(() => {
    
     return (
         <Container>
-            {/* <Message text="Поле обязательно для заполнения" show={show} setShow={setShow} /> */}
+            <Helmet>
+                <title>Notes Page</title>
+                <meta name="description" content="Добавить книгу к прочтению" />
+            </Helmet>
             <h1 style={{textAlign: 'center'}}>Список книг, которые планирую прочитать:</h1>
             <Form className="d-flex justify-content-between mt-5 mb-5 notes-form">
                 <Form.Control

@@ -1,8 +1,7 @@
 import { $authHost } from "./index";
-import { ICountry } from "../types/types";
 
-export const createCountry = async (country: ICountry) => {
-    const {data} = await $authHost.post('api/country', country);    
+export const createCountry = async (name: string) => {
+    const {data} = await $authHost.post('api/country', {name});    
     return data;
 };
 
@@ -11,7 +10,7 @@ export const fetchCountries = async () => {
     return data;
 };
 
-export const deleteCountry = async (id: number) => {
-    const {data} = await $authHost.delete('api/country/' + id);
+export const deleteCountry = async (name: string) => {
+    const {data} = await $authHost.delete('api/country/' + name);
     return data;
 };

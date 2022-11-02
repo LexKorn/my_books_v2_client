@@ -1,11 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Modal, Button, Form} from 'react-bootstrap';
 
-import {createCountry, deleteCountry, fetchCountries} from '../../http/countryAPI';
-import { fetchAuthors } from '../../http/authorAPI';
+import {createCountry, deleteCountry} from '../../http/countryAPI';
 import { ADD_AUTHOR_ROUTE } from '../../utils/consts';
-import { IAuthor, ICountry } from '../../types/types';
 
 interface ModalCountryProps {
     show: boolean;
@@ -15,14 +13,7 @@ interface ModalCountryProps {
 
 const ModalCountry: React.FC<ModalCountryProps> = ({show, onHide}) => {
     const [value, setValue] = useState<string>('');
-    const [authors, setAuthors] = useState<IAuthor[]>([]);
-    const [countries, setCountries] = useState<ICountry[]>([]);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        fetchAuthors().then(data => setAuthors(data));
-        fetchCountries().then(data => setCountries(data));
-    }, []);
 
     const addCountry = () => {
         if (!value.trim()) {
@@ -34,6 +25,7 @@ const ModalCountry: React.FC<ModalCountryProps> = ({show, onHide}) => {
                 setValue('');
                 onHide();
                 navigate(ADD_AUTHOR_ROUTE);
+                // window.location.reload();
             })
             .catch(err => alert(err.response.data.message));       
     };
@@ -43,19 +35,11 @@ const ModalCountry: React.FC<ModalCountryProps> = ({show, onHide}) => {
 			return alert('Поле обязательно для заполнения');
 		}
 
-        const country = countries.filter(country => country.name == 'value');
-        if (country.length > 0) {
-            const authorCountry = authors.filter(author => author.countryId == country[0].id);
-
-            if (authorCountry.length > 0) {
-                return alert('Страну нельзя удалить, пока на неё ссылается автор');
-            }
-        }                
-
         deleteCountry(value).then(() => {
             setValue('');
             onHide();
             navigate(ADD_AUTHOR_ROUTE);
+            // window.location.reload();
         });
     };
 

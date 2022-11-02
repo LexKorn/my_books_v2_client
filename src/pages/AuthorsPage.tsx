@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { Container, Spinner } from 'react-bootstrap';
 import {observer} from 'mobx-react-lite';
+import {Helmet} from "react-helmet";
 
 import List from '../components/List/List';
 import AuthorItem from '../components/AuthorItem';
@@ -37,6 +38,10 @@ const AuthorsPage: React.FC = observer(() => {
 
     return (
         <Container>
+            <Helmet>
+                <title>Authors Page</title>
+                <meta name="description" content="Список авторов" />
+            </Helmet>
             <FilterPanel value={value} setValue={setValue} filter={filter} setFilter={setFilter} elems={authors} />
             <h1 style={{textAlign: 'center'}}>Список добавленных авторов:</h1>
             <List

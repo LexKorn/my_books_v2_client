@@ -2,6 +2,7 @@ import React, {useContext, useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
+import {Helmet} from "react-helmet";
 
 import { IAuthor } from '../../types/types';
 import { AUTHORS_ROUTE } from '../../utils/consts';
@@ -43,16 +44,20 @@ const AuthorBlock: React.FunctionComponent = () => {
 
     return (
         <div className='author'>
+            <Helmet>
+                <title>{author.name}</title>
+                <meta name="description" content={`Страничка ${author.name}`} />
+            </Helmet>
             <div className="author__wrapper">
                 <img src={process.env.REACT_APP_API_URL + author.photo} className='author__wrapper__photo' />
                 <div className="author__wrapper__text">
                     <div className="author__name">{author.name}</div>
                     <div className="author__country">{countryAuthor[0].name}</div>
+                    <button className='author__button' onClick={() => setVisible(true)}>Редактировать</button>
+                    <button className='author__button' onClick={removeAuthor}>Удалить</button>
                     <div className="author__description">{author.description}</div>
                 </div>                
-            </div>            
-            <button className='author__button' onClick={() => setVisible(true)}>Редактировать</button>
-            <button className='author__button' onClick={removeAuthor}>Удалить</button>
+            </div>
             <ModalAuthor 
                 show={visible} 
                 onHide={() => setVisible(false)} 

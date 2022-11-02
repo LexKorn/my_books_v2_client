@@ -41,6 +41,8 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
             return alert('Все поля обязательны для заполнения');
         } else if (!library.selectedCountry.id) {
             return alert('Страну необходимо указать');
+        } else if (!file) {
+            return alert('Фото необходимо загрузить');
         }
 
         const formData = new FormData();

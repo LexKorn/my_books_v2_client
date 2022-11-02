@@ -31,7 +31,7 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
     const filterPost = (items: (IAuthor | IBook)[], filter: string) => {
         switch (filter) {
             case 'Отечественные':
-            return items.filter(item => item.countryId === 4 || item.countryId === 14);
+                return items.filter(item => item.countryId === 4 || item.countryId === 14);
             case 'Зарубежные':
                 return items.filter(item => item.countryId !== 4 && item.countryId !== 14);
             case 'Любимые':               
