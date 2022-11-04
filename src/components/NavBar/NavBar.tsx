@@ -4,7 +4,7 @@ import {Navbar, Nav, Container, Button} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 
 import {Context} from '../../index';
-import { FIRST_ROUTE, ADD_AUTHOR_ROUTE, ADD_BOOK_ROUTE, AUTHORS_ROUTE, NOTE_ROUTE } from "../../utils/consts";
+import { FIRST_ROUTE, ADD_AUTHOR_ROUTE, ADD_BOOK_ROUTE, AUTHORS_ROUTE, NOTE_ROUTE, MANUAL_ROUTE } from "../../utils/consts";
 
 import './navBar.sass';
 
@@ -15,7 +15,6 @@ const NavBar = observer(() => {
 
     const logOut = () => {
         user.setIsAuth(false);
-        // user.setIsUser({});
         localStorage.clear();
     };
 
@@ -51,7 +50,13 @@ const NavBar = observer(() => {
                                         className="me-2 nav-btn"
                                         onClick={() => navigate(NOTE_ROUTE)}
                                         >Прочитать
-                                    </Button>                        
+                                    </Button>       
+                                    <Button
+                                        variant={"outline-light"}
+                                        className="me-2 nav-btn"
+                                        onClick={() => navigate(MANUAL_ROUTE)}
+                                        >Инструкция
+                                    </Button>                   
                                 </div> 
                                 <Button 
                                     variant={"outline-light"} 

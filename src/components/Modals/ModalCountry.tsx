@@ -20,7 +20,7 @@ const ModalCountry: React.FC<ModalCountryProps> = ({show, onHide}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchAuthors().then(data => setAuthors(data));
+        fetchAuthors().then(data => setAuthors(data.rows));
         fetchCountries().then(data => setCountries(data));
     }, []);
 
@@ -43,10 +43,9 @@ const ModalCountry: React.FC<ModalCountryProps> = ({show, onHide}) => {
 			return alert('Поле обязательно для заполнения');
 		}
 
-        const country = countries.filter(country => country.name == 'value');
+        const country: ICountry[] = countries.filter(country => country.name == value);
         if (country.length > 0) {
-            const authorCountry = authors.filter(author => author.countryId == country[0].id);
-
+            const authorCountry: IAuthor[] = authors.filter(author => author.countryId == country[0].id);
             if (authorCountry.length > 0) {
                 return alert('Страну нельзя удалить, пока на неё ссылается автор');
             }

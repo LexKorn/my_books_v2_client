@@ -10,7 +10,7 @@ interface ModalBookProps {
     idInit: number;
     nameInit: string;
     linkInit: string;
-    ratingInit: string;
+    ratingInit: number;
     commentInit: string;
     coverInit: string;
 };
@@ -19,7 +19,7 @@ interface ModalBookProps {
 const ModalBook: React.FC<ModalBookProps> = ({show, onHide, idInit, nameInit, linkInit, ratingInit, commentInit, coverInit}) => {
     const [name, setName] = useState<string>(nameInit);
     const [link, setLink] = useState<string>(linkInit);
-    const [rating, setRating] = useState<string>(ratingInit);
+    const [rating, setRating] = useState<number>(ratingInit);
     const [comment, setComment] = useState<string>(commentInit);
     const [file, setFile] = useState<string | Blob>(coverInit);
     

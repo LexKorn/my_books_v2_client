@@ -7,18 +7,18 @@ import { Context } from '../index';
 import { fetchAuthors } from '../http/authorAPI';
 import { ADD_AUTHOR_ROUTE, MAIN_ROUTE } from '../utils/consts';
 import {IBook} from '../types/types';
-import unknownAuthor from '../assets/unknown_author.jpg';
+// import unknownAuthor from '../assets/unknown_author.jpg';
 
 interface CUBookProps {
     id: number;
     name: string;
     link: string;
-    rating: string;
+    rating: number;
     comment: string;
     file: string | Blob;
     setName: (name: string) => void;
     setLink: (link: string) => void;
-    setRating: (rating: string) => void;
+    setRating: (rating: number) => void;
     setComment: (comment: string) => void;
     setFile: (file: string) => void;
     handler: (id: number, book: IBook) => Promise<any>;
@@ -40,18 +40,20 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
     };
 
     const onClick = () => {
-        if (!name.trim() || !link.trim() || !rating || !comment.trim()) {
+        if (!name.trim() || !link.trim() || !comment.trim()) {
             return alert('Все поля обязательны для заполнения');
         } else if (!library.selectedAuthor.id) {
             return alert('Автора необходимо указать');
         } else if (!file) {
             return alert('Обложку необходимо загрузить');
+        } else if (rating < 1 || rating > 10) {
+            return alert ('Оценка книги должна быть от 1 до 10');
         }
 
         const formData = new FormData();
         formData.append('name', name);
         formData.append('link', link);
-        formData.append('rating', rating);
+        formData.append('rating', `${rating}`);
         formData.append('comment', comment);
         formData.append('cover', file);
         formData.append('authorId', `${library.selectedAuthor.id}`);
@@ -89,11 +91,11 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
                         onChange={e => setLink(e.target.value)}
                         placeholder="Введите ссылку на книгу"
                     />
+                    <label htmlFor="rating" className="mt-3">Поставьте оценку книги от 1 до 10</label> 
                     <Form.Control
-                        className="mt-3"
                         value={rating}
-                        onChange={e => setRating(e.target.value)}
-                        placeholder="Поставьте оценку книги"
+                        type="number"
+                        onChange={e => setRating(+e.target.value)}
                     />
                     <Form.Control as="textarea"
                         className="mt-3"

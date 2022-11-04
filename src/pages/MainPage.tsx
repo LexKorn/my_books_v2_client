@@ -41,7 +41,7 @@ const MainPage: React.FC = observer(() => {
     return (        
         <Container>
             <Helmet>
-                <title>Main Page</title>
+                <title>My Books</title>
                 <meta name="description" content="Портал прочитанных книг" />
             </Helmet>
             <FilterPanel value={value} setValue={setValue} filter={filter} setFilter={setFilter} elems={books} />

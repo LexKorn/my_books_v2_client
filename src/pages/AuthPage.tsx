@@ -21,8 +21,10 @@ const AuthPage = observer(() => {
             let data;
             if (isLogin) {
                 data = await login(username, password);
+                // console.log(Response.message);
             } else {
                 data = await registration(username, password);
+                // alert(data.message);
             }
 
             user.setIsAuth(true);

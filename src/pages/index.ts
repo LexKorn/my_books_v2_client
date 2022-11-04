@@ -7,5 +7,6 @@ import BookPage from './BookPage';
 import FirstPage from './FirstPage/FirstPage';
 import MainPage from './MainPage';
 import NotesPage from './NotesPage/NotesPage';
+import ManualPage from './ManualPage';
 
-export { AddAuthorPage, AddBookPage, AuthorPage, AuthorsPage, AuthPage, BookPage, FirstPage, MainPage, NotesPage };
+export { AddAuthorPage, AddBookPage, AuthorPage, AuthorsPage, AuthPage, BookPage, FirstPage, MainPage, NotesPage, ManualPage };

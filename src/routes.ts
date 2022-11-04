@@ -1,5 +1,5 @@
-import { FIRST_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, BOOK_ROUTE, AUTHOR_ROUTE, AUTHORS_ROUTE, NOTE_ROUTE, MAIN_ROUTE, ADD_AUTHOR_ROUTE, ADD_BOOK_ROUTE } from "./utils/consts";
-import {AddAuthorPage, AddBookPage, AuthorPage, AuthorsPage, AuthPage, BookPage, FirstPage, MainPage, NotesPage} from './pages';
+import { FIRST_ROUTE, LOGIN_ROUTE, REGISTER_ROUTE, BOOK_ROUTE, AUTHOR_ROUTE, AUTHORS_ROUTE, NOTE_ROUTE, MAIN_ROUTE, ADD_AUTHOR_ROUTE, ADD_BOOK_ROUTE, MANUAL_ROUTE } from "./utils/consts";
+import {AddAuthorPage, AddBookPage, AuthorPage, AuthorsPage, AuthPage, BookPage, FirstPage, MainPage, NotesPage, ManualPage} from './pages';
 
 export const authRoutes = [
     {
@@ -29,6 +29,10 @@ export const authRoutes = [
     {
         path: NOTE_ROUTE,
         Component: NotesPage
+    },
+    {
+        path: MANUAL_ROUTE,
+        Component: ManualPage
     },
 ];
 
