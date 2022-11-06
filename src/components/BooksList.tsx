@@ -1,29 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { Container, ListGroup, Spinner } from 'react-bootstrap';
+import { Container, ListGroup } from 'react-bootstrap';
 
-import List from './List/List';
-import BookItem from './BookItem';
 import { IBook, IAuthor } from '../types/types';
 import { fetchBooks } from '../http/bookAPI';
 import { fetchOneAuthor } from '../http/authorAPI';
 import { BOOK_ROUTE } from '../utils/consts';
-
-// interface ListProps<T> {
-    // items: T[];
-    // renderItem: (item: T) => React.ReactNode;
-//     books: IBook[];
-//     renderItem: (item: IBook) => React.ReactNode;
-// };
 
 import './booksList.sass';
 
 
 export default function BooksList<T> ()  {   //props: ListProps<T>
     const [books, setBooks] = useState<IBook[]>([]);
-    const [author, setAuthor] = useState<IAuthor>({});  
-    // const [loading, setLoading] = useState<boolean>(true);
+    const [author, setAuthor] = useState<IAuthor>({});
     const {id} = useParams();
     const navigate = useNavigate();
 
@@ -34,16 +24,11 @@ export default function BooksList<T> ()  {   //props: ListProps<T>
   
     function getBooks() {
         fetchBooks()
-            .then(data => setBooks(data.rows))
+            .then(data => setBooks(data))
             .catch(err => alert(err.message))
-            // .finally(() => setLoading(false));
     }
 
     const authorBooks: IBook[] = books.filter(book => book.authorId === author.id);   
-
-    // if (loading) {
-    //     return <Spinner animation={"border"}/>
-    // }
 
 
     return (

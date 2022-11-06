@@ -28,7 +28,7 @@ const MainPage: React.FC = observer(() => {
   
     function getBooks() {
         fetchBooks()
-            .then(data => setBooks(data.rows))
+            .then(data => setBooks(data))
             .catch(err => alert(err.message))
             .finally(() => setLoading(false));
     }

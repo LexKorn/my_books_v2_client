@@ -25,7 +25,7 @@ const BookBlock: React.FunctionComponent = () => {
     const [visible, setVisible] = useState<boolean>(false);
     
     useEffect(() => {
-        fetchAuthors().then(data => library.setAuthors(data.rows));
+        fetchAuthors().then(data => library.setAuthors(data));
         fetchCountries().then(data => library.setCountries(data));
         fetchOneBook(id)
             .then(data => setBook(data))

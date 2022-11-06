@@ -20,7 +20,7 @@ const BookItem: React.FC<BookItemProps> = observer(({book, onClick}) => {
     const {library} = useContext(Context);
 
     useEffect(() => {
-        fetchAuthors().then(data => library.setAuthors(data.rows));
+        fetchAuthors().then(data => library.setAuthors(data));
     }, []);    
 
     const authorBook = library.authors.filter(author => author.id === book.authorId);

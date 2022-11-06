@@ -25,7 +25,7 @@ const NotesPage: React.FC = observer(() => {
 
     async function getNotes() {
         fetchNotes()
-            .then(data => setNotes(data.rows))
+            .then(data => setNotes(data))
             .catch(err => alert(err.message))
             .finally(() => setLoading(false));
     }

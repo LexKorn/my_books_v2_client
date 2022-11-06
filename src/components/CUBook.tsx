@@ -32,7 +32,7 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchAuthors().then(data => library.setAuthors(data.rows));
+        fetchAuthors().then(data => library.setAuthors(data));
     }, []);    
 
     const selectFile = e => { 

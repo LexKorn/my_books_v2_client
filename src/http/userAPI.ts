@@ -9,8 +9,15 @@ export const registration = async (username: string, password: string) => {
 
 export const login = async (username: string, password: string) => {
     const {data} = await $host.post('api/user/login', {username, password});
-    localStorage.setItem('token', data.token);
+    localStorage.setItem('token', data.token);    
     return jwt_decode(data.token);
+
+    // const response = await $host.post('api/user/login', {username, password});
+    // if (response.status !== 200) {
+    //     return console.error(response.data);        
+    // }
+    // localStorage.setItem('token', response.data.token);    
+    // return jwt_decode(response.data.token);
 };
 
 export const check = async () => {

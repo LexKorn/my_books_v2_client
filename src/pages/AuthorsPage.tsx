@@ -26,7 +26,7 @@ const AuthorsPage: React.FC = observer(() => {
   
     function getAuthors() {
         fetchAuthors()
-            .then(data => setAuthors(data.rows))
+            .then(data => setAuthors(data))
             .catch(err => alert(err.message))
             .finally(() => setLoading(false));
     }
