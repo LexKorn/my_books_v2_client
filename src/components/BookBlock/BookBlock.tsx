@@ -6,7 +6,7 @@ import {Helmet} from "react-helmet";
 // import {observer} from 'mobx-react-lite';
 
 import { IBook } from '../../types/types';
-import { MAIN_ROUTE, AUTHOR_ROUTE } from '../../utils/consts';
+import { MAIN_ROUTE, AUTHOR_ROUTE, NOTFOUND_ROUTE } from '../../utils/consts';
 import { deleteBook, fetchOneBook } from '../../http/bookAPI';
 import { fetchAuthors } from '../../http/authorAPI';
 import { fetchCountries } from '../../http/countryAPI';
@@ -18,9 +18,19 @@ import './bookBlock.sass';
 
 const BookBlock: React.FunctionComponent = () => {
     const {library} = useContext(Context);
-    const [book, setBook] = useState<IBook>({});    
+    const [book, setBook] = useState<IBook>({
+        id: 0,
+        name: '',
+        link: '',
+        rating: 1,
+        comment: '',
+        cover: '',
+        userId: 0,
+        countryId: 0,
+        authorId: 0        
+    });    
     const [loading, setLoading] = useState<boolean>(true);
-    const {id} = useParams();
+    const {id} = useParams<{id: string}>();
     const navigate = useNavigate();
     const [visible, setVisible] = useState<boolean>(false);
     
@@ -29,6 +39,7 @@ const BookBlock: React.FunctionComponent = () => {
         fetchCountries().then(data => library.setCountries(data));
         fetchOneBook(id)
             .then(data => setBook(data))
+            .catch(() => navigate(NOTFOUND_ROUTE))
             .finally(() => setLoading(false));
     }, [id]);
 
@@ -65,7 +76,7 @@ const BookBlock: React.FunctionComponent = () => {
                     {/* <div className="book__country">countryId: {book.countryId}</div>
                     <div className="book__country">authorBook.countryId: {authorBook[0].countryId}</div> */}
                     <div className="book__rating">{book.rating}</div>
-                    <a className="book__link" href={book.link} target="_blank">Прочитать можно здесь</a><br/>
+                    <a className="book__link" href={book.link} target="_blank">Прочитать можно здесь &gt;&gt;</a><br/>
                     <button className='book__button' onClick={() => setVisible(true)}>Редактировать</button>
                     <button className='book__button'  onClick={removeBook}>Удалить</button>
                     <div className="book__comment">{book.comment}</div>
@@ -74,6 +85,7 @@ const BookBlock: React.FunctionComponent = () => {
             <ModalBook 
                 show={visible} 
                 onHide={() => setVisible(false)} 
+                // @ts-ignore 
                 idInit={id} 
                 nameInit={book.name}
                 linkInit={book.link}

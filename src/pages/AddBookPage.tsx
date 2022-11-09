@@ -11,7 +11,7 @@ const AddBookPage: React.FC = observer(() => {
     const [link, setLink] = useState<string>('');
     const [rating, setRating] = useState<number>(1);
     const [comment, setComment] = useState<string>('');
-    const [file, setFile] = useState<string | Blob>('');
+    const [file, setFile] = useState<string>('');
 
     return (
         <>
@@ -30,7 +30,9 @@ const AddBookPage: React.FC = observer(() => {
                 setLink={setLink}
                 setRating={setRating}
                 setComment={setComment}
+                // @ts-ignore
                 setFile={setFile}
+                // @ts-ignore
                 handler={createBook}
                 title='Добавить книгу'
                 btnName='Добавить'

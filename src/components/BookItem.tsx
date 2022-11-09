@@ -6,7 +6,8 @@ import {observer} from 'mobx-react-lite';
 import { IBook } from '../types/types';
 import { Context } from '../index';
 import { fetchAuthors } from '../http/authorAPI';
-import star from '../assets/star.png';
+// import star from '../assets/star.png';
+const star = require('../assets/star.png');
 
 // import './transition.sass';
 

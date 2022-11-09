@@ -7,6 +7,7 @@ import { Context } from '../index';
 import { fetchAuthors } from '../http/authorAPI';
 import { ADD_AUTHOR_ROUTE, MAIN_ROUTE } from '../utils/consts';
 import {IBook} from '../types/types';
+import {isValidUrl} from '../utils/validURL';
 // import unknownAuthor from '../assets/unknown_author.jpg';
 
 interface CUBookProps {
@@ -15,13 +16,13 @@ interface CUBookProps {
     link: string;
     rating: number;
     comment: string;
-    file: string | Blob;
+    file: string;
     setName: (name: string) => void;
     setLink: (link: string) => void;
     setRating: (rating: number) => void;
     setComment: (comment: string) => void;
-    setFile: (file: string) => void;
-    handler: (id: number, book: IBook) => Promise<any>;
+    setFile: (file: File) => void;
+    handler: (id: number, book: FormData) => Promise<any>;
     title: string;
     btnName: string;
 };
@@ -35,12 +36,15 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
         fetchAuthors().then(data => library.setAuthors(data));
     }, []);    
 
-    const selectFile = e => { 
-        setFile(e.target.files[0]);                
+    const selectFile = (e: React.ChangeEvent<HTMLInputElement>) => { 
+        const files: FileList | null = e.target.files;
+        if (files) {
+            setFile(files[0]);
+        }                
     };
 
     const onClick = () => {
-        if (!name.trim() || !link.trim() || !comment.trim()) {
+        if (!name.trim() || !comment.trim()) {
             return alert('Все поля обязательны для заполнения');
         } else if (!library.selectedAuthor.id) {
             return alert('Автора необходимо указать');
@@ -48,6 +52,8 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
             return alert('Обложку необходимо загрузить');
         } else if (rating < 1 || rating > 10) {
             return alert ('Оценка книги должна быть от 1 до 10');
+        } else if (!isValidUrl(link)) {
+            return alert ('Неверный формат ссылки');
         }
 
         const formData = new FormData();
@@ -60,13 +66,28 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
         formData.append('countryId', `${library.selectedAuthor.countryId}`);
 
         if (btnName === 'Добавить') {
-            handler(formData).then(data => {
-                library.setSelectedAuthor({});
+            // @ts-ignore 
+            handler(formData).then(() => {
+                library.setSelectedAuthor({
+                    id: 0,
+                    name: '',
+                    description: '',
+                    photo: '',
+                    userId: 0,
+                    countryId: 0,        
+                });
                 navigate(MAIN_ROUTE);
             });
         } else {
             handler(id, formData).then(() => {
-                library.setSelectedAuthor({});
+                library.setSelectedAuthor({
+                    id: 0,
+                    name: '',
+                    description: '',
+                    photo: '',
+                    userId: 0,
+                    countryId: 0,        
+                });
                 navigate(MAIN_ROUTE);
                 // navigate(AUTHOR_ROUTE + `/${id}`);
         });
@@ -102,6 +123,7 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
                         value={comment}
                         onChange={e => setComment(e.target.value)}
                         placeholder="Введите коментарий"
+                        maxLength={700}
                     />              
                     <label htmlFor="file" className="mt-3">Загрузите обложку книги</label>       
                     <Form.Control                        

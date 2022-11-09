@@ -1,8 +1,4 @@
-export function isValidUrl(url: string): boolean {
-  const objRE = /(^https?:\/\/)?[a-z0-9~_\-\.]+\.[a-z]{2,9}(\/|:|\?[!-~]*)?$/i;
-  return objRE.test(url);
-}
-
-console.log(isValidUrl('https://stackoverflow.com/questions/1303872'));
-
-// [\wа-я]
+export const isValidUrl = (url: string): boolean => {
+  const urlPattern = /(^https?:\/\/)?[a-zА-ЯЁ0-9~_\-\.]+\.[a-zА-ЯЁ]{2,9}(\/|:|\?)?([!-~А-ЯЁ]*)?$/i;
+  return urlPattern.test(url);
+};

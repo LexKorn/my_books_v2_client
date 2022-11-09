@@ -9,3 +9,4 @@ export const ADD_AUTHOR_ROUTE = '/author';
 export const AUTHORS_ROUTE = '/authors';
 export const NOTE_ROUTE = '/note';
 export const MANUAL_ROUTE = '/manual';
+export const NOTFOUND_ROUTE = '/404';

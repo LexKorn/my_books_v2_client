@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {Form, Container, Spinner} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import {Helmet} from "react-helmet";
@@ -8,11 +8,13 @@ import List from '../../components/List/List';
 import NoteItem from '../../components/NoteItem';
 import {createNote, deleteNote, fetchNotes} from '../../http/noteAPI';
 import ModalNote from '../../components/Modals/ModalNote';
+import { Context } from '../../index';
 
 import './notesPage.sass';
 
 
 const NotesPage: React.FC = observer(() => {
+    const {library} = useContext(Context);
     const [value, setValue] = useState<string>('');
     const [notes, setNotes] = useState<INote[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -26,6 +28,7 @@ const NotesPage: React.FC = observer(() => {
     async function getNotes() {
         fetchNotes()
             .then(data => setNotes(data))
+            .then(() => library.setToggleScroll())
             .catch(err => alert(err.message))
             .finally(() => setLoading(false));
     }
@@ -74,6 +77,7 @@ const NotesPage: React.FC = observer(() => {
                 <Form.Control
                     value={value}
                     onChange={e => setValue(e.target.value)}
+                    // @ts-ignore
                     onKeyPress={e => keyPress(e)}
                     placeholder={"Добавить книгу"}
                 />

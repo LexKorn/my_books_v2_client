@@ -13,7 +13,14 @@ import './booksList.sass';
 
 export default function BooksList<T> ()  {   //props: ListProps<T>
     const [books, setBooks] = useState<IBook[]>([]);
-    const [author, setAuthor] = useState<IAuthor>({});
+    const [author, setAuthor] = useState<IAuthor>({
+        id: 0,
+        name: '',
+        description: '',
+        photo: '',
+        userId: 0,
+        countryId: 0,        
+    });
     const {id} = useParams();
     const navigate = useNavigate();
 

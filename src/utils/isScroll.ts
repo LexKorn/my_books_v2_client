@@ -1,10 +1,14 @@
-const isScroll = () => {
-    // if (document.body.scrollHeight == document.body.offsetHeight) {
-    //     return false;
-    // } else {
-    //     return true;
-    // }
+const isScroll = (): boolean => {
+    console.log(window.innerHeight);
+    console.log(document.documentElement.scrollHeight);
+
+    if (document.documentElement.clientHeight > document.documentElement.scrollHeight) {
+        return false;
+    } else {
+        return true;
+    }
     
+    /*
     if(-[1,]){
         if (document.body.offsetHeight > window.innerHeight) {
             alert("Скролл есть");
@@ -23,7 +27,7 @@ const isScroll = () => {
             // return false;
         }
     }
-    
+    */
 };
 
 export default isScroll;

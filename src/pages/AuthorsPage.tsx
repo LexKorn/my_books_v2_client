@@ -27,6 +27,7 @@ const AuthorsPage: React.FC = observer(() => {
     function getAuthors() {
         fetchAuthors()
             .then(data => setAuthors(data))
+            .then(() => library.setToggleScroll())
             .catch(err => alert(err.message))
             .finally(() => setLoading(false));
     }

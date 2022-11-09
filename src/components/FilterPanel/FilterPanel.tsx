@@ -27,9 +27,9 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
         fetchBooks().then(data => setBooks(data));
     }, []);
     
-    const arrAuthorId = books.map(book => book.authorId);
+    const arrAuthorId: number[] = books.map(book => book.authorId);
     
-    const authorFrequency = arrAuthorId.reduce((acc, elem) => {
+    const authorFrequency = arrAuthorId.reduce((acc: {[index: string]:any}, elem) => {
         acc[elem] = (acc[elem] || 0) + 1;
         return acc;
     }, {});
@@ -53,8 +53,10 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
                 return items.filter(item => item.countryId === Russia[0].id || item.countryId === USSR[0].id);
             case 'Зарубежные':
                 return items.filter(item => item.countryId !== Russia[0].id && item.countryId !== USSR[0].id);
-            case 'Любимые':               
+            case 'Любимые':    
+                // @ts-ignore           
                 return elems[0].authorId ?
+                    // @ts-ignore 
                     items.filter(item => item.rating >= 8)
                     : 
                     items.filter(item => authorFrequency[item.id] >= 3);
@@ -74,10 +76,12 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
 
         return sortItems;
     };
-
+    // @ts-ignore 
     if (elems[0].authorId) {
+        // @ts-ignore 
         library.setVisibleBooks(sort(filterPost(search(elems, value), filter)));
     } else {
+        // @ts-ignore 
         library.setVisibleAuthors(sort(filterPost(search(elems, value), filter)));
     }
 

@@ -6,13 +6,14 @@ import { observer } from 'mobx-react-lite';
 import {Context} from '../../index';
 import { FIRST_ROUTE, ADD_AUTHOR_ROUTE, ADD_BOOK_ROUTE, AUTHORS_ROUTE, NOTE_ROUTE, MANUAL_ROUTE } from "../../utils/consts";
 // import calcScroll from '../../utils/calcScroll';
-import isScroll from '../../utils/isScroll';
+// import isScroll from '../../utils/isScroll';
 
 import './navBar.sass';
 
 
 const NavBar = observer(() => {
     const {user} = useContext(Context);
+    // const {library} = useContext(Context);
     const navigate = useNavigate();
     // const [scroll, setScroll] = useState<boolean>(false);
 
@@ -21,22 +22,26 @@ const NavBar = observer(() => {
         localStorage.clear();
     };
 
-    // const scroll = calcScroll();
+    // const scrollWidth = calcScroll();
+
     // useEffect(() => {
-    //     isScroll();
-    // }, [window.location.href]);
+    //     setScroll(isScroll());
+        // console.log(isScroll());
+    // }, [library.toggleScroll]);
 
     // const navi = (rout: string): void => {
     //     navigate(rout);
-    //     setScroll(isScroll());
-    //     console.log(scroll);        
+    //     setScroll(true); 
     // };
+    // const marginRight: number = scroll ? scrollWidth : 0;
+    // style={{marginRigth: `${marginRigth}px`}}
+    // <Container style={!scroll ? {marginRight: scrollWidth} : {marginRight: 0}}>
 
     return (
         <>
             {user.isAuth ?
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top" >
-                    <Container>
+                    <Container >
                         <NavLink to={FIRST_ROUTE}>МОИ КНИГИ</NavLink>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav" className='justify-content-around'>

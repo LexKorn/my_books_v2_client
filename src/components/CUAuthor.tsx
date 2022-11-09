@@ -13,11 +13,11 @@ interface CUAuthorProps {
     id: number;
     name: string;
     description: string;
-    file: string | Blob;
+    file: string;
     setName: (name: string) => void;
     setDescription: (description: string) => void;
-    setFile: (file: string) => void;
-    handler: (id: number, author: IAuthor) => Promise<any>;
+    setFile: (file: File) => void;
+    handler: (id: number, author: FormData) => Promise<any>;
     title: string;
     btnName: string;
 };
@@ -32,8 +32,11 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
         fetchCountries().then(data => library.setCountries(data));
     }, [visible]);
 
-    const selectFile = e => { 
-        setFile(e.target.files[0]);
+    const selectFile = (e: React.ChangeEvent<HTMLInputElement>) => { 
+        const files: FileList | null = e.target.files;
+        if (files) {
+            setFile(files[0]);
+        }        
     };
 
     const onClick = () => {
@@ -52,13 +55,24 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
         formData.append('countryId', `${library.selectedCountry.id}`);
 
         if (btnName === 'Добавить') {
-            handler(formData).then(() => {
-                library.setSelectedCountry({});
-                navigate(AUTHORS_ROUTE);
-            });
+            // @ts-ignore 
+            handler(formData)
+                .then(() => {
+                    library.setSelectedCountry({
+                        id: 0,
+                        name: '',
+                        userId: 0
+                    });
+                    navigate(AUTHORS_ROUTE);
+                })
+                .catch(err => alert(err.response.data.message));
         } else {
             handler(id, formData).then(() => {
-                library.setSelectedCountry({});
+                library.setSelectedCountry({
+                    id: 0,
+                    name: '',
+                    userId: 0
+                });
                 navigate(AUTHORS_ROUTE);
                 // navigate(AUTHOR_ROUTE + `/${id}`);
             });
@@ -82,6 +96,7 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                         placeholder="Введите описание"
+                        maxLength={700}
                     />              
                     <label htmlFor="file" className="mt-3">Загрузите фото автора</label>       
                     <Form.Control                        

@@ -20,7 +20,7 @@ const ModalCountry: React.FC<ModalCountryProps> = ({show, onHide}) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetchAuthors().then(data => setAuthors(data.rows));
+        fetchAuthors().then(data => setAuthors(data));
         fetchCountries().then(data => setCountries(data));
     }, []);
 
@@ -68,6 +68,7 @@ const ModalCountry: React.FC<ModalCountryProps> = ({show, onHide}) => {
         <Modal
             show={show}
             onHide={onHide}
+            // @ts-ignore 
             size="md"
             centered
             >
@@ -81,6 +82,7 @@ const ModalCountry: React.FC<ModalCountryProps> = ({show, onHide}) => {
                     <Form.Control
                         value={value}
                         onChange={e => setValue(e.target.value)}
+                        // @ts-ignore
                         onKeyPress={e => keyPress(e)}
                         placeholder={"Введите название страны"}
                     />

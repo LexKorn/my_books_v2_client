@@ -17,7 +17,7 @@ interface ModalAuthorProps {
 const ModalAuthor: React.FC<ModalAuthorProps> = ({show, onHide, idInit, nameInit, descriptionInit, photoInit}) => {
     const [name, setName] = useState<string>(nameInit);
     const [description, setDescription] = useState<string>(descriptionInit);
-    const [file, setFile] = useState<string | Blob>(photoInit);
+    const [file, setFile] = useState<string>(photoInit);
     
     return (
         <Modal
@@ -34,6 +34,7 @@ const ModalAuthor: React.FC<ModalAuthorProps> = ({show, onHide, idInit, nameInit
                     file={file}
                     setName={setName}
                     setDescription={setDescription}
+                    // @ts-ignore
                     setFile={setFile}
                     handler={updateAuthor}
                     title='Обновить автора'

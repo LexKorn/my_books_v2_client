@@ -5,7 +5,7 @@ import { Spinner } from 'react-bootstrap';
 import {Helmet} from "react-helmet";
 
 import { IAuthor } from '../../types/types';
-import { AUTHORS_ROUTE } from '../../utils/consts';
+import { AUTHORS_ROUTE, NOTFOUND_ROUTE } from '../../utils/consts';
 import { deleteAuthor, fetchOneAuthor } from '../../http/authorAPI';
 import { fetchCountries } from '../../http/countryAPI';
 import {Context} from '../../index';
@@ -16,9 +16,16 @@ import './authorBlock.sass';
 
 const AuthorBlock: React.FunctionComponent = () => {
     const {library} = useContext(Context);
-    const [author, setAuthor] = useState<IAuthor>({});    
+    const [author, setAuthor] = useState<IAuthor>({
+        id: 0,
+        name: '',
+        description: '',
+        photo: '',
+        userId: 0,
+        countryId: 0,        
+    });    
     const [loading, setLoading] = useState<boolean>(true);
-    const {id} = useParams();
+    const {id} = useParams<{id: string}>();
     const navigate = useNavigate();
     const [visible, setVisible] = useState<boolean>(false);
     
@@ -26,6 +33,7 @@ const AuthorBlock: React.FunctionComponent = () => {
         fetchCountries().then(data => library.setCountries(data));
         fetchOneAuthor(id)
             .then(data => setAuthor(data))
+            .catch(() => navigate(NOTFOUND_ROUTE))
             .finally(() => setLoading(false));
     }, []);
 
@@ -61,6 +69,7 @@ const AuthorBlock: React.FunctionComponent = () => {
             <ModalAuthor 
                 show={visible} 
                 onHide={() => setVisible(false)} 
+                // @ts-ignore 
                 idInit={id} 
                 nameInit={author.name}
                 descriptionInit={author.description}

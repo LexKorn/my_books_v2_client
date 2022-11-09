@@ -21,7 +21,7 @@ const ModalBook: React.FC<ModalBookProps> = ({show, onHide, idInit, nameInit, li
     const [link, setLink] = useState<string>(linkInit);
     const [rating, setRating] = useState<number>(ratingInit);
     const [comment, setComment] = useState<string>(commentInit);
-    const [file, setFile] = useState<string | Blob>(coverInit);
+    const [file, setFile] = useState<string>(coverInit);
     
     return (
         <Modal
@@ -42,6 +42,7 @@ const ModalBook: React.FC<ModalBookProps> = ({show, onHide, idInit, nameInit, li
                     setLink={setLink}
                     setRating={setRating}
                     setComment={setComment}
+                    // @ts-ignore
                     setFile={setFile}
                     handler={updateBook}
                     title='Обновить книгу'

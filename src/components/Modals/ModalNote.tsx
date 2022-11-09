@@ -36,6 +36,7 @@ const ModalNote: React.FC<ModalNoteProps> = ({show, onHide, idNote}) => {
         <Modal
             show={show}
             onHide={onHide}
+            // @ts-ignore
             size="md"
             centered
             >
@@ -49,6 +50,7 @@ const ModalNote: React.FC<ModalNoteProps> = ({show, onHide, idNote}) => {
                     <Form.Control
                         value={value}
                         onChange={e => setValue(e.target.value)}
+                        // @ts-ignore
                         onKeyPress={e => keyPress(e)}
                         placeholder={"Введите название книги"}
                     />

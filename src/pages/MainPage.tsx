@@ -29,6 +29,7 @@ const MainPage: React.FC = observer(() => {
     function getBooks() {
         fetchBooks()
             .then(data => setBooks(data))
+            .then(() => library.setToggleScroll())
             .catch(err => alert(err.message))
             .finally(() => setLoading(false));
     }

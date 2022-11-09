@@ -1,7 +1,8 @@
 import React, {useState, useContext} from 'react';
 import {Container, Form, Card, Button} from 'react-bootstrap';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import {observer} from 'mobx-react-lite'
+import {observer} from 'mobx-react-lite';
+import {AxiosError} from 'axios';
 
 import { LOGIN_ROUTE, REGISTER_ROUTE, MAIN_ROUTE, FIRST_ROUTE } from '../utils/consts';
 import { login, registration } from '../http/userAPI';
@@ -21,16 +22,15 @@ const AuthPage = observer(() => {
             let data;
             if (isLogin) {
                 data = await login(username, password);
-                // console.log(Response.message);
             } else {
                 data = await registration(username, password);
-                // alert(data.message);
             }
 
             user.setIsAuth(true);
             navigate(MAIN_ROUTE);
-        } catch(err) {
-            alert(err);
+        } catch(err: unknown) {
+            const error = err as AxiosError;
+            alert(JSON.parse(error.request.response).message);
         }        
     };
 

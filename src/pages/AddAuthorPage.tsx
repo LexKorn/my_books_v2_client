@@ -8,7 +8,7 @@ import { createAuthor } from '../http/authorAPI';
 const AddAuthorPage: React.FC = () => {
     const [name, setName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
-    const [file, setFile] = useState<string | Blob>('');
+    const [file, setFile] = useState<string>('');
     
     return (
         <>
@@ -23,7 +23,9 @@ const AddAuthorPage: React.FC = () => {
                 file={file}
                 setName={setName}
                 setDescription={setDescription}
+                // @ts-ignore
                 setFile={setFile}
+                // @ts-ignore
                 handler={createAuthor}
                 title='Добавить автора'
                 btnName='Добавить'
