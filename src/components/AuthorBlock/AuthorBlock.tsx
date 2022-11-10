@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import {Helmet} from "react-helmet";
 
-import { IAuthor } from '../../types/types';
+import { IAuthor, ICountry } from '../../types/types';
 import { AUTHORS_ROUTE, NOTFOUND_ROUTE } from '../../utils/consts';
 import { deleteAuthor, fetchOneAuthor } from '../../http/authorAPI';
 import { fetchCountries } from '../../http/countryAPI';
@@ -37,7 +37,7 @@ const AuthorBlock: React.FunctionComponent = () => {
             .finally(() => setLoading(false));
     }, []);
 
-    const countryAuthor = library.countries.filter(country => country.id === author.countryId);
+    const countryAuthor: ICountry[] = library.countries.filter(country => country.id === author.countryId);
 
     const removeAuthor = () => {
         if (window.confirm('Вы действительно хотите удалить автора? Все книги, связанные с ним, будут удалены.')) {
@@ -57,7 +57,7 @@ const AuthorBlock: React.FunctionComponent = () => {
                 <meta name="description" content={`Страничка ${author.name}`} />
             </Helmet>
             <div className="author__wrapper">
-                <img src={process.env.REACT_APP_API_URL + author.photo} className='author__wrapper__photo' />
+                <img src={process.env.REACT_APP_API_URL + author.photo} className='author__wrapper__photo' alt="photo of author" />
                 <div className="author__wrapper__text">
                     <div className="author__name">{author.name}</div>
                     <div className="author__country">{countryAuthor[0].name}</div>

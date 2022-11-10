@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
 const $host = axios.create({
     baseURL: process.env.REACT_APP_API_URL
@@ -7,11 +7,6 @@ const $host = axios.create({
 const $authHost = axios.create({
     baseURL: process.env.REACT_APP_API_URL
 });
-
-// const authInterception = (config: AxiosRequestConfig): AxiosRequestConfig  => {
-//     config.headers?authorization = `Bearer ${localStorage.getItem('token')}`;
-//     return config;
-// };
 
 // @ts-ignore
 const authInterception = config => {

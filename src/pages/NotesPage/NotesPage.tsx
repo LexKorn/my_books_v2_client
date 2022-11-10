@@ -69,7 +69,7 @@ const NotesPage: React.FC = observer(() => {
     return (
         <Container>
             <Helmet>
-                <title>Notes Page</title>
+                <title>Книги к прочтению</title>
                 <meta name="description" content="Добавить книгу к прочтению" />
             </Helmet>
             <h1 style={{textAlign: 'center'}}>Список книг, которые планирую прочитать:</h1>

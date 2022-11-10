@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import {Helmet} from "react-helmet";
-// import {observer} from 'mobx-react-lite';
 
-import { IBook } from '../../types/types';
+import { IAuthor, IBook } from '../../types/types';
 import { MAIN_ROUTE, AUTHOR_ROUTE, NOTFOUND_ROUTE } from '../../utils/consts';
 import { deleteBook, fetchOneBook } from '../../http/bookAPI';
 import { fetchAuthors } from '../../http/authorAPI';
@@ -43,7 +42,7 @@ const BookBlock: React.FunctionComponent = () => {
             .finally(() => setLoading(false));
     }, [id]);
 
-    const authorBook = library.authors.filter(author => author.id === book.authorId);
+    const authorBook: IAuthor[] = library.authors.filter(author => author.id === book.authorId);
 
     const removeBook = () => {
         if (window.confirm('Вы действительно хотите удалить книгу?')) {
@@ -64,7 +63,7 @@ const BookBlock: React.FunctionComponent = () => {
                 <meta name="description" content={`Страничка книги ${book.name}`} />
             </Helmet>
             <div className="book__wrapper">
-                <img src={process.env.REACT_APP_API_URL + book.cover} className='book__wrapper__cover' />
+                <img src={process.env.REACT_APP_API_URL + book.cover} className='book__wrapper__cover' alt='cover of book' />
                 <div className="book__wrapper__text">                    
                     <div 
                         className="book__author"
@@ -73,8 +72,6 @@ const BookBlock: React.FunctionComponent = () => {
                         >{authorBook[0].name}
                     </div>
                     <div className="book__name">{book.name}</div>
-                    {/* <div className="book__country">countryId: {book.countryId}</div>
-                    <div className="book__country">authorBook.countryId: {authorBook[0].countryId}</div> */}
                     <div className="book__rating">{book.rating}</div>
                     <a className="book__link" href={book.link} target="_blank">Прочитать можно здесь &gt;&gt;</a><br/>
                     <button className='book__button' onClick={() => setVisible(true)}>Редактировать</button>

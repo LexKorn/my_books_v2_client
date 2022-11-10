@@ -13,7 +13,7 @@ const AddAuthorPage: React.FC = () => {
     return (
         <>
             <Helmet>
-                <title>Add Author Page</title>
+                <title>Добавить автора</title>
                 <meta name="description" content="Добавить автора" />
             </Helmet>
             <CUAuthor 

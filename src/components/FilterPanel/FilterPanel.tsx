@@ -1,10 +1,12 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {observer} from 'mobx-react-lite';
+import { useLocation } from 'react-router-dom';
 
 import { IAuthor, IBook, ICountry } from '../../types/types';
 import { Context } from '../../index';
 import { fetchCountries } from '../../http/countryAPI';
 import { fetchBooks } from '../../http/bookAPI';
+import { MAIN_ROUTE } from '../../utils/consts';
 
 import './filterPanel.sass';
 
@@ -21,12 +23,14 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
     const {library} = useContext(Context);
     const [countries, setCountries] = useState<ICountry[]>([]);
     const [books, setBooks] = useState<IBook[]>([]);
+    const location = useLocation();
+    const isMain = location.pathname === MAIN_ROUTE;
 
     useEffect(() => {
         fetchCountries().then(data => setCountries(data));
         fetchBooks().then(data => setBooks(data));
     }, []);
-    
+        
     const arrAuthorId: number[] = books.map(book => book.authorId);
     
     const authorFrequency = arrAuthorId.reduce((acc: {[index: string]:any}, elem) => {
@@ -35,7 +39,7 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
     }, {});
 
     const Russia: ICountry[] = countries.filter(country => country.name === 'Россия');
-    const USSR: ICountry[] = countries.filter(country => country.name === 'СССР');    
+    const USSR: ICountry[] = countries.filter(country => country.name === 'СССР');   
 
     const search = (items: (IAuthor | IBook)[], term: string) => {
         if (term.length === 0) {
@@ -50,12 +54,25 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
     const filterPost = (items: (IAuthor | IBook)[], filter: string) => {
         switch (filter) {
             case 'Отечественные':
-                return items.filter(item => item.countryId === Russia[0].id || item.countryId === USSR[0].id);
+                if (Russia.length > 0 && USSR.length > 0) {
+                    return items.filter(item => item.countryId === Russia[0].id || item.countryId === USSR[0].id);
+                } else if (Russia.length === 0 && USSR.length > 0) {
+                    return items.filter(item => item.countryId === USSR[0].id);
+                } else if (Russia.length > 0 && USSR.length === 0) {
+                    return items.filter(item => item.countryId === Russia[0].id);
+                } 
+                return items;
             case 'Зарубежные':
-                return items.filter(item => item.countryId !== Russia[0].id && item.countryId !== USSR[0].id);
-            case 'Любимые':    
-                // @ts-ignore           
-                return elems[0].authorId ?
+                if (Russia.length > 0 && USSR.length > 0) {
+                    return items.filter(item => item.countryId !== Russia[0].id && item.countryId !== USSR[0].id);
+                } else if (Russia.length === 0 && USSR.length > 0) {
+                    return items.filter(item => item.countryId !== USSR[0].id);
+                } else if (Russia.length > 0 && USSR.length === 0) {
+                    return items.filter(item => item.countryId !== Russia[0].id);
+                }
+                return items;
+            case 'Любимые':
+                return isMain ?
                     // @ts-ignore 
                     items.filter(item => item.rating >= 8)
                     : 
@@ -76,8 +93,8 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
 
         return sortItems;
     };
-    // @ts-ignore 
-    if (elems[0].authorId) {
+
+    if (isMain) {
         // @ts-ignore 
         library.setVisibleBooks(sort(filterPost(search(elems, value), filter)));
     } else {

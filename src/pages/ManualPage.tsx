@@ -7,7 +7,7 @@ const ManualPage: React.FC = () => {
     return (
         <Container style={{width: '70%'}} className="manual">
             <Helmet>
-                <title>Manual Page</title>
+                <title>Инструкция</title>
                 <meta name="description" content="Рекомендации" />
             </Helmet>
             <h1 className="manual__title">Рекомендации</h1>

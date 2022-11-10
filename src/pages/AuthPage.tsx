@@ -3,13 +3,14 @@ import {Container, Form, Card, Button} from 'react-bootstrap';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {observer} from 'mobx-react-lite';
 import {AxiosError} from 'axios';
+import {Helmet} from "react-helmet";
 
 import { LOGIN_ROUTE, REGISTER_ROUTE, MAIN_ROUTE, FIRST_ROUTE } from '../utils/consts';
 import { login, registration } from '../http/userAPI';
 import {Context} from '../index';
 
 
-const AuthPage = observer(() => {
+const AuthPage: React.FC = observer(() => {
     const {user} = useContext(Context);
     const location = useLocation();
     const navigate = useNavigate();
@@ -39,12 +40,16 @@ const AuthPage = observer(() => {
             className='d-flex justify-content-center align-items-center'
             style ={{height: window.innerHeight - 54}}
         >
+            <Helmet>
+                <title>Авторизация</title>
+                <meta name="description" content="Авторизация" />
+            </Helmet>
             <Card style={{width: 600}} className="p-5">
                 <h2 className='m-auto'>{isLogin ? 'Авторизация' : 'Регистрация'}</h2>
                 <Form className="d-flex flex-column">
                     <Form.Control
                         className="mt-3"
-                        placeholder="Введите ваш username..."
+                        placeholder="Введите ваш email..."
                         value={username}
                         onChange={e => setUsername(e.target.value)}
                     />

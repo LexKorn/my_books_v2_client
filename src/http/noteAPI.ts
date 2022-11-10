@@ -1,7 +1,7 @@
 import { $authHost } from "./index";
 
 export const createNote = async (name: string) => {
-    const {data} = await $authHost.post('api/note', {name});    //   (`api/note?name=${name}`)
+    const {data} = await $authHost.post('api/note', {name}); 
     return data;
 };
 

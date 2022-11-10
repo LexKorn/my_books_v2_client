@@ -97,7 +97,7 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
 
     return (
         <Container className="d-flex justify-content-center">
-            <div style={{width: '50%'}}>
+            <div>
                 <h1>{title}</h1>
                 <Form>
                     <Form.Control

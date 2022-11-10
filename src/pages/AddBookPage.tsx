@@ -16,7 +16,7 @@ const AddBookPage: React.FC = observer(() => {
     return (
         <>
             <Helmet>
-                <title>Add Book Page</title>
+                <title>Добавить книгу</title>
                 <meta name="description" content="Добавить книгу" />
             </Helmet>
             <CUBook 

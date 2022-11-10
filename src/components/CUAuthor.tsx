@@ -74,6 +74,7 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
                     userId: 0
                 });
                 navigate(AUTHORS_ROUTE);
+                // window.location.reload();
                 // navigate(AUTHOR_ROUTE + `/${id}`);
             });
         }
@@ -82,7 +83,7 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
 
     return (
         <Container className="d-flex justify-content-center">
-            <div style={{width: '50%'}}>
+            <div>
                 <h1>{title}</h1>
                 <Form>
                     <Form.Control

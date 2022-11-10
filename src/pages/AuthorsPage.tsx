@@ -40,7 +40,7 @@ const AuthorsPage: React.FC = observer(() => {
     return (
         <Container>
             <Helmet>
-                <title>Authors Page</title>
+                <title>Список авторов</title>
                 <meta name="description" content="Список авторов" />
             </Helmet>
             <FilterPanel value={value} setValue={setValue} filter={filter} setFilter={setFilter} elems={authors} />
