@@ -3,10 +3,10 @@ import {useNavigate} from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Container, ListGroup } from 'react-bootstrap';
 
-import { IBook, IAuthor } from '../types/types';
-import { fetchBooks } from '../http/bookAPI';
-import { fetchOneAuthor } from '../http/authorAPI';
-import { BOOK_ROUTE } from '../utils/consts';
+import { IBook, IAuthor } from '../../types/types';
+import { fetchBooks } from '../../http/bookAPI';
+import { fetchOneAuthor } from '../../http/authorAPI';
+import { BOOK_ROUTE } from '../../utils/consts';
 
 import './booksList.sass';
 

@@ -5,9 +5,8 @@ import { observer } from 'mobx-react-lite';
 
 import { Context } from '../index';
 import { fetchCountries } from '../http/countryAPI';
-import { AUTHORS_ROUTE, AUTHOR_ROUTE } from '../utils/consts';
+import { AUTHORS_ROUTE } from '../utils/consts';
 import ModalCountry from './Modals/ModalCountry';
-import { IAuthor } from '../types/types';
 
 interface CUAuthorProps {
     id: number;
@@ -74,8 +73,6 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
                     userId: 0
                 });
                 navigate(AUTHORS_ROUTE);
-                // window.location.reload();
-                // navigate(AUTHOR_ROUTE + `/${id}`);
             });
         }
     };

@@ -9,14 +9,12 @@ import BookItem from '../components/BookItem';
 import FilterPanel from '../components/FilterPanel/FilterPanel';
 import { IBook } from '../types/types';
 import { fetchBooks } from '../http/bookAPI';
+import { fetchAuthors } from '../http/authorAPI';
 import { Context } from '../index';
-
-// import './mainPage.sass';
 
 
 const MainPage: React.FC = observer(() => {
     const {library} = useContext(Context);
-    const [books, setBooks] = useState<IBook[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [value, setValue] = useState<string>('');
     const [filter, setFilter] = useState<string>('Все');
@@ -24,12 +22,13 @@ const MainPage: React.FC = observer(() => {
 
     useEffect(() => {
         getBooks();
+        fetchAuthors().then(data => library.setAuthors(data));
     }, []);
   
     function getBooks() {
         fetchBooks()
-            .then(data => setBooks(data))
-            .then(() => library.setToggleScroll())
+            .then(data => library.setBooks(data))
+            // .then(() => library.setToggleScroll())
             .catch(err => alert(err.message))
             .finally(() => setLoading(false));
     }
@@ -45,7 +44,7 @@ const MainPage: React.FC = observer(() => {
                 <title>Мои книги</title>
                 <meta name="description" content="Портал прочитанных книг" />
             </Helmet>
-            <FilterPanel value={value} setValue={setValue} filter={filter} setFilter={setFilter} elems={books} />
+            <FilterPanel value={value} setValue={setValue} filter={filter} setFilter={setFilter} elems={library.books} />
             <h1 style={{textAlign: 'center'}}>Список добавленных книг:</h1>
                 <List 
                     items={library.visibleBooks} 

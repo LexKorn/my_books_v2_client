@@ -8,7 +8,6 @@ import { IAuthor, IBook } from '../../types/types';
 import { MAIN_ROUTE, AUTHOR_ROUTE, NOTFOUND_ROUTE } from '../../utils/consts';
 import { deleteBook, fetchOneBook } from '../../http/bookAPI';
 import { fetchAuthors } from '../../http/authorAPI';
-import { fetchCountries } from '../../http/countryAPI';
 import {Context} from '../../index';
 import ModalBook from '../Modals/ModalBook';
 
@@ -35,7 +34,6 @@ const BookBlock: React.FunctionComponent = () => {
     
     useEffect(() => {
         fetchAuthors().then(data => library.setAuthors(data));
-        fetchCountries().then(data => library.setCountries(data));
         fetchOneBook(id)
             .then(data => setBook(data))
             .catch(() => navigate(NOTFOUND_ROUTE))
@@ -69,7 +67,7 @@ const BookBlock: React.FunctionComponent = () => {
                         className="book__author"
                         style={{cursor: 'pointer'}}
                         onClick={() => {navigate(AUTHOR_ROUTE + `/${authorBook[0].id}`)}}
-                        >{authorBook[0].name}
+                        >{authorBook.length > 0 ? authorBook[0].name : ''}
                     </div>
                     <div className="book__name">{book.name}</div>
                     <div className="book__rating">{book.rating}</div>

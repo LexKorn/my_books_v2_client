@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {Container, Button, Form, Dropdown} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
@@ -6,9 +6,7 @@ import { observer } from 'mobx-react-lite';
 import { Context } from '../index';
 import { fetchAuthors } from '../http/authorAPI';
 import { ADD_AUTHOR_ROUTE, MAIN_ROUTE } from '../utils/consts';
-import {IBook} from '../types/types';
 import {isValidUrl} from '../utils/validURL';
-// import unknownAuthor from '../assets/unknown_author.jpg';
 
 interface CUBookProps {
     id: number;
@@ -89,9 +87,8 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
                     countryId: 0,        
                 });
                 navigate(MAIN_ROUTE);
-                // navigate(AUTHOR_ROUTE + `/${id}`);
-        });
-    }
+            });
+        }
     };
 
 

@@ -60,7 +60,7 @@ const AuthorBlock: React.FunctionComponent = () => {
                 <img src={process.env.REACT_APP_API_URL + author.photo} className='author__wrapper__photo' alt="photo of author" />
                 <div className="author__wrapper__text">
                     <div className="author__name">{author.name}</div>
-                    <div className="author__country">{countryAuthor[0].name}</div>
+                    <div className="author__country">{countryAuthor.length > 0 ? countryAuthor[0].name : ''}</div>
                     <button className='author__button' onClick={() => setVisible(true)}>Редактировать</button>
                     <button className='author__button' onClick={removeAuthor}>Удалить</button>
                     <div className="author__description">{author.description}</div>

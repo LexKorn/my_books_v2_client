@@ -22,16 +22,16 @@ interface FilterPanelProps {
 const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filter, setFilter, elems}) => {
     const {library} = useContext(Context);
     const [countries, setCountries] = useState<ICountry[]>([]);
-    const [books, setBooks] = useState<IBook[]>([]);
+    // const [books, setBooks] = useState<IBook[]>([]);
     const location = useLocation();
     const isMain = location.pathname === MAIN_ROUTE;
 
     useEffect(() => {
         fetchCountries().then(data => setCountries(data));
-        fetchBooks().then(data => setBooks(data));
+        // fetchBooks().then(data => setBooks(data));
     }, []);
         
-    const arrAuthorId: number[] = books.map(book => book.authorId);
+    const arrAuthorId: number[] = library.books.map(book => book.authorId);
     
     const authorFrequency = arrAuthorId.reduce((acc: {[index: string]:any}, elem) => {
         acc[elem] = (acc[elem] || 0) + 1;
