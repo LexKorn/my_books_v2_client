@@ -30,6 +30,10 @@ const BookBlock: React.FunctionComponent = () => {
             .finally(() => setLoading(false));
     }, [id]);
 
+    useEffect(() => {
+        library.setSelectedAuthor(authorBook[0]);
+    }, [book]);
+
     const authorBook: IAuthor[] = library.authors.filter(author => author.id === book.authorId);
 
     const removeBook = () => {

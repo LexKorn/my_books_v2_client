@@ -1,25 +1,22 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Form, Container, Spinner} from 'react-bootstrap';
 import { observer } from 'mobx-react-lite';
 import {Helmet} from "react-helmet";
 
-import { INote } from '../../types/types';
 import List from '../../components/List/List';
 import NoteItem from '../../components/NoteItem';
-import {createNote, deleteNote, fetchNotes} from '../../http/noteAPI';
 import ModalNote from '../../components/Modals/ModalNote';
-import { Context } from '../../index';
+import { INote } from '../../types/types';
+import {createNote, deleteNote, fetchNotes} from '../../http/noteAPI';
 
 import './notesPage.sass';
 
 
 const NotesPage: React.FC = observer(() => {
-    const {library} = useContext(Context);
     const [value, setValue] = useState<string>('');
     const [notes, setNotes] = useState<INote[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [visible, setVisible] = useState<boolean>(false);
-    // const [toggle, setToggle] = useState<boolean>(false);
     const [note, setNote] = useState<INote>({} as INote);
 
     useEffect(() => {
@@ -48,8 +45,6 @@ const NotesPage: React.FC = observer(() => {
 
     const editNote = (note: INote) => {
         setNote(note);
-        // setToggle(!toggle);
-        console.log(note);
         setVisible(true);
     };
       

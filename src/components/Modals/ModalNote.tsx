@@ -12,12 +12,11 @@ interface ModalNoteProps {
 
 
 const ModalNote: React.FC<ModalNoteProps> = ({show, onHide, note}) => {
-    const [name, setName] = useState<string>('note.name');
-    console.log(note);
+    const [name, setName] = useState<string>(' ');
 
     useEffect(() => {
         setName(note.name);
-    }, []);
+    }, [show]);
     
 
     const editNote = () => {
@@ -36,7 +35,7 @@ const ModalNote: React.FC<ModalNoteProps> = ({show, onHide, note}) => {
     const keyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            alert('Необходимо задать название книги');
+            alert('Поле обязательно для заполнения');
         }
     };
 
@@ -65,8 +64,8 @@ const ModalNote: React.FC<ModalNoteProps> = ({show, onHide, note}) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant={"outline-secondary"} onClick={onHide}>Закрыть</Button>
                 <Button variant={"outline-danger"} onClick={editNote}>Обновить</Button>
+                <Button variant={"outline-secondary"} onClick={onHide}>Закрыть</Button>
             </Modal.Footer>
         </Modal>
     );

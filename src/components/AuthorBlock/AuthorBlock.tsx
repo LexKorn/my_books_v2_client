@@ -30,6 +30,10 @@ const AuthorBlock: React.FunctionComponent = () => {
             .finally(() => setLoading(false));
     }, []);
 
+    useEffect(() => {
+        library.setSelectedCountry(countryAuthor[0]);
+    }, [author]);
+
     const countryAuthor: ICountry[] = library.countries.filter(country => country.id === author.countryId);
 
     const removeAuthor = () => {
