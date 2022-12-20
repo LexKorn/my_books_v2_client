@@ -16,17 +16,7 @@ import './bookBlock.sass';
 
 const BookBlock: React.FunctionComponent = () => {
     const {library} = useContext(Context);
-    const [book, setBook] = useState<IBook>({
-        id: 0,
-        name: '',
-        link: '',
-        rating: 1,
-        comment: '',
-        cover: '',
-        userId: 0,
-        countryId: 0,
-        authorId: 0        
-    });    
+    const [book, setBook] = useState<IBook>({} as IBook);    
     const [loading, setLoading] = useState<boolean>(true);
     const {id} = useParams<{id: string}>();
     const navigate = useNavigate();
@@ -80,13 +70,7 @@ const BookBlock: React.FunctionComponent = () => {
             <ModalBook 
                 show={visible} 
                 onHide={() => setVisible(false)} 
-                // @ts-ignore 
-                idInit={id} 
-                nameInit={book.name}
-                linkInit={book.link}
-                ratingInit={book.rating}
-                commentInit={book.comment}
-                coverInit={book.cover}
+                book={book}
             />
         </div>
     );

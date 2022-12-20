@@ -5,7 +5,6 @@ import { useLocation } from 'react-router-dom';
 import { IAuthor, IBook, ICountry } from '../../types/types';
 import { Context } from '../../index';
 import { fetchCountries } from '../../http/countryAPI';
-import { fetchBooks } from '../../http/bookAPI';
 import { MAIN_ROUTE } from '../../utils/consts';
 
 import './filterPanel.sass';
@@ -22,13 +21,11 @@ interface FilterPanelProps {
 const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filter, setFilter, elems}) => {
     const {library} = useContext(Context);
     const [countries, setCountries] = useState<ICountry[]>([]);
-    // const [books, setBooks] = useState<IBook[]>([]);
     const location = useLocation();
     const isMain = location.pathname === MAIN_ROUTE;
 
     useEffect(() => {
         fetchCountries().then(data => setCountries(data));
-        // fetchBooks().then(data => setBooks(data));
     }, []);
         
     const arrAuthorId: number[] = library.books.map(book => book.authorId);

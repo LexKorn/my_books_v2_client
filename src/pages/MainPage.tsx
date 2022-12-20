@@ -7,6 +7,7 @@ import {Helmet} from "react-helmet";
 import List from '../components/List/List';
 import BookItem from '../components/BookItem';
 import FilterPanel from '../components/FilterPanel/FilterPanel';
+import Statistics from '../components/Statistics/Statistics';
 import { IBook } from '../types/types';
 import { fetchBooks } from '../http/bookAPI';
 import { fetchAuthors } from '../http/authorAPI';
@@ -28,13 +29,8 @@ const MainPage: React.FC = observer(() => {
     function getBooks() {
         fetchBooks()
             .then(data => library.setBooks(data))
-            // .then(() => library.setToggleScroll())
             .catch(err => alert(err.message))
             .finally(() => setLoading(false));
-    }
-
-    if (loading) {
-        return <Spinner animation={"border"}/>
     }
 
 
@@ -44,8 +40,11 @@ const MainPage: React.FC = observer(() => {
                 <title>Мои книги</title>
                 <meta name="description" content="Портал прочитанных книг" />
             </Helmet>
+
+            <Statistics />
             <FilterPanel value={value} setValue={setValue} filter={filter} setFilter={setFilter} elems={library.books} />
             <h1 style={{textAlign: 'center'}}>Список добавленных книг:</h1>
+            {loading ? <Spinner animation={"border"}/> :
                 <List 
                     items={library.visibleBooks} 
                     renderItem={(book: IBook) => 
@@ -55,7 +54,7 @@ const MainPage: React.FC = observer(() => {
                             key={book.id} 
                         />
                     } 
-                />           
+                />}           
         </Container>
     );
 });

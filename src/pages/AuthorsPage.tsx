@@ -7,6 +7,7 @@ import {Helmet} from "react-helmet";
 import List from '../components/List/List';
 import AuthorItem from '../components/AuthorItem';
 import FilterPanel from '../components/FilterPanel/FilterPanel';
+import Statistics from '../components/Statistics/Statistics';
 import { IAuthor } from '../types/types';
 import { fetchAuthors } from '../http/authorAPI';
 import { Context } from '../index';
@@ -27,13 +28,8 @@ const AuthorsPage: React.FC = observer(() => {
     function getAuthors() {
         fetchAuthors()
             .then(data => setAuthors(data))
-            .then(() => library.setToggleScroll())
             .catch(err => alert(err.message))
             .finally(() => setLoading(false));
-    }
-
-    if (loading) {
-        return <Spinner animation={"border"}/>
     }
 
 
@@ -43,18 +39,21 @@ const AuthorsPage: React.FC = observer(() => {
                 <title>Список авторов</title>
                 <meta name="description" content="Список авторов" />
             </Helmet>
+
+            <Statistics />
             <FilterPanel value={value} setValue={setValue} filter={filter} setFilter={setFilter} elems={authors} />
             <h1 style={{textAlign: 'center'}}>Список добавленных авторов:</h1>
-            <List
-                items={library.visibleAuthors} 
-                renderItem={(author: IAuthor) => 
-                    <AuthorItem 
-                        onClick={(author) => navigate('/author/' + author.id)} 
-                        author={author} 
-                        key={author.id} 
-                    />
-                } 
-            />
+            {loading ? <Spinner animation={"border"}/> :
+                <List
+                    items={library.visibleAuthors} 
+                    renderItem={(author: IAuthor) => 
+                        <AuthorItem 
+                            onClick={(author) => navigate('/author/' + author.id)} 
+                            author={author} 
+                            key={author.id} 
+                        />
+                    } 
+                />}
         </Container>
     );
 });

@@ -2,22 +2,20 @@ import React, {useState} from 'react';
 import {Modal, Button} from 'react-bootstrap';
 
 import { updateAuthor } from '../../http/authorAPI';
+import { IAuthor } from '../../types/types';
 import CUAuthor from '../CUAuthor';
 
 interface ModalAuthorProps {
     show: boolean;
     onHide: () => void;
-    idInit: number;
-    nameInit: string;
-    descriptionInit: string;
-    photoInit: string;
+    author: IAuthor;
 };
 
 
-const ModalAuthor: React.FC<ModalAuthorProps> = ({show, onHide, idInit, nameInit, descriptionInit, photoInit}) => {
-    const [name, setName] = useState<string>(nameInit);
-    const [description, setDescription] = useState<string>(descriptionInit);
-    const [file, setFile] = useState<string>(photoInit);
+const ModalAuthor: React.FC<ModalAuthorProps> = ({show, onHide, author}) => {
+    const [name, setName] = useState<string>(author.name);
+    const [description, setDescription] = useState<string>(author.description);
+    const [file, setFile] = useState<string>('');
     
     return (
         <Modal
@@ -28,7 +26,7 @@ const ModalAuthor: React.FC<ModalAuthorProps> = ({show, onHide, idInit, nameInit
             >
             <Modal.Body>
                 <CUAuthor 
-                    id={idInit}
+                    id={author.id}
                     name={name}
                     description={description}
                     file={file}

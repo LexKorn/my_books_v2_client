@@ -7,6 +7,7 @@ import { Context } from '../index';
 import { fetchAuthors } from '../http/authorAPI';
 import { ADD_AUTHOR_ROUTE, MAIN_ROUTE } from '../utils/consts';
 import {isValidUrl} from '../utils/validURL';
+import { IAuthor } from '../types/types';
 
 interface CUBookProps {
     id: number;
@@ -66,26 +67,12 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
         if (btnName === 'Добавить') {
             // @ts-ignore 
             handler(formData).then(() => {
-                library.setSelectedAuthor({
-                    id: 0,
-                    name: '',
-                    description: '',
-                    photo: '',
-                    userId: 0,
-                    countryId: 0,        
-                });
+                library.setSelectedAuthor({} as IAuthor);
                 navigate(MAIN_ROUTE);
             });
         } else {
             handler(id, formData).then(() => {
-                library.setSelectedAuthor({
-                    id: 0,
-                    name: '',
-                    description: '',
-                    photo: '',
-                    userId: 0,
-                    countryId: 0,        
-                });
+                library.setSelectedAuthor({} as IAuthor);
                 navigate(MAIN_ROUTE);
             });
         }

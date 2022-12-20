@@ -2,26 +2,22 @@ import React, {useState} from 'react';
 import {Modal, Button} from 'react-bootstrap';
 
 import { updateBook } from '../../http/bookAPI';
+import { IBook } from '../../types/types';
 import CUBook from '../CUBook';
 
 interface ModalBookProps {
     show: boolean;
     onHide: () => void;
-    idInit: number;
-    nameInit: string;
-    linkInit: string;
-    ratingInit: number;
-    commentInit: string;
-    coverInit: string;
+    book: IBook;
 };
 
 
-const ModalBook: React.FC<ModalBookProps> = ({show, onHide, idInit, nameInit, linkInit, ratingInit, commentInit, coverInit}) => {
-    const [name, setName] = useState<string>(nameInit);
-    const [link, setLink] = useState<string>(linkInit);
-    const [rating, setRating] = useState<number>(ratingInit);
-    const [comment, setComment] = useState<string>(commentInit);
-    const [file, setFile] = useState<string>(coverInit);
+const ModalBook: React.FC<ModalBookProps> = ({show, onHide, book}) => {
+    const [name, setName] = useState<string>(book.name);
+    const [link, setLink] = useState<string>(book.link);
+    const [rating, setRating] = useState<number>(book.rating);
+    const [comment, setComment] = useState<string>(book.comment);
+    const [file, setFile] = useState<string>('');
     
     return (
         <Modal
@@ -32,7 +28,7 @@ const ModalBook: React.FC<ModalBookProps> = ({show, onHide, idInit, nameInit, li
             >
             <Modal.Body>
                 <CUBook 
-                    id={idInit}
+                    id={book.id}
                     name={name}
                     link={link}
                     rating={rating}

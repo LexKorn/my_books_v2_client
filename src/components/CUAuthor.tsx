@@ -16,7 +16,7 @@ interface CUAuthorProps {
     setName: (name: string) => void;
     setDescription: (description: string) => void;
     setFile: (file: File) => void;
-    handler: (id: number, author: FormData) => Promise<any>;
+    handler: (id: number, author: FormData) => Promise<unknown>;
     title: string;
     btnName: string;
 };
@@ -41,10 +41,10 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
     const onClick = () => {
         if (!name.trim() || !description.trim()) {
             return alert('Все поля обязательны для заполнения');
-        } else if (!library.selectedCountry.id) {
-            return alert('Страну необходимо указать');
         } else if (!file) {
             return alert('Фото необходимо загрузить');
+        } else if (!library.selectedCountry.id) {
+            return alert('Страну необходимо указать');        
         }
 
         const formData = new FormData();
@@ -66,14 +66,16 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
                 })
                 .catch(err => alert(err.response.data.message));
         } else {
-            handler(id, formData).then(() => {
-                library.setSelectedCountry({
-                    id: 0,
-                    name: '',
-                    userId: 0
-                });
-                navigate(AUTHORS_ROUTE);
-            });
+            handler(id, formData)
+                .then(() => {
+                    library.setSelectedCountry({
+                        id: 0,
+                        name: '',
+                        userId: 0
+                    });
+                    navigate(AUTHORS_ROUTE);
+                })
+                .catch(err => alert(err.response.data.message));
         }
     };
 

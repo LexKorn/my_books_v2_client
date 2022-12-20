@@ -19,7 +19,8 @@ const NotesPage: React.FC = observer(() => {
     const [notes, setNotes] = useState<INote[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [visible, setVisible] = useState<boolean>(false);
-    const [idNote, setIdNote] = useState<number>(0);
+    // const [toggle, setToggle] = useState<boolean>(false);
+    const [note, setNote] = useState<INote>({} as INote);
 
     useEffect(() => {
         getNotes();
@@ -28,7 +29,6 @@ const NotesPage: React.FC = observer(() => {
     async function getNotes() {
         fetchNotes()
             .then(data => setNotes(data))
-            .then(() => library.setToggleScroll())
             .catch(err => alert(err.message))
             .finally(() => setLoading(false));
     }
@@ -47,7 +47,9 @@ const NotesPage: React.FC = observer(() => {
     };
 
     const editNote = (note: INote) => {
-        setIdNote(note.id);
+        setNote(note);
+        // setToggle(!toggle);
+        console.log(note);
         setVisible(true);
     };
       
@@ -61,10 +63,6 @@ const NotesPage: React.FC = observer(() => {
         }
     };
 
-    if (loading) {
-        return <Spinner animation={"border"}/>
-    }
-
    
     return (
         <Container>
@@ -72,6 +70,7 @@ const NotesPage: React.FC = observer(() => {
                 <title>Книги к прочтению</title>
                 <meta name="description" content="Добавить книгу к прочтению" />
             </Helmet>
+
             <h1 style={{textAlign: 'center'}}>Список книг, которые планирую прочитать:</h1>
             <Form className="d-flex justify-content-between mt-5 mb-5 notes-form">
                 <Form.Control
@@ -82,18 +81,19 @@ const NotesPage: React.FC = observer(() => {
                     placeholder={"Добавить книгу"}
                 />
             </Form>            
-            <List 
-                items={notes} 
-                renderItem={(note: INote) => 
-                    <NoteItem 
-                        onDelete={(note) => removeNote(note)} 
-                        onEdit={(note) => editNote(note)} 
-                        note={note} 
-                        key={note.id} 
-                    />
-                } 
-            />
-            <ModalNote show={visible} onHide={() => setVisible(false)} idNote={idNote} />            
+            {loading ? <Spinner animation={"border"}/> :
+                <List 
+                    items={notes} 
+                    renderItem={(note: INote) => 
+                        <NoteItem 
+                            onDelete={() => removeNote(note)} 
+                            onEdit={() => editNote(note)} 
+                            note={note} 
+                            key={note.id} 
+                        />
+                    } 
+                />}
+            <ModalNote show={visible} onHide={() => setVisible(false)} note={note} />            
         </Container>            
     );
 });

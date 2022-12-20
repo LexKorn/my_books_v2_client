@@ -2,10 +2,12 @@ import React from 'react';
 import { Container } from 'react-bootstrap';
 import {Helmet} from "react-helmet";
 
+import './manualPage.sass';
+
 
 const ManualPage: React.FC = () => {
     return (
-        <Container style={{width: '70%'}} className="manual">
+        <Container className="manual">
             <Helmet>
                 <title>Инструкция</title>
                 <meta name="description" content="Рекомендации" />
@@ -13,7 +15,7 @@ const ManualPage: React.FC = () => {
             <h1 className="manual__title">Рекомендации</h1>
             <ol className="manual__list">
                 <li>Для рейтинга книг используется 10-бальная шкала. Каждый может сам придумать как ранжировать книги.<br/>
-                    Мой вариант рейтинга книг:
+                    Например, мой вариант рейтинга книг:
                     <ul>
                         <li>10 - читал более 2 раз</li>
                         <li>9 - читал 2 раза</li>

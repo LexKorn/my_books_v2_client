@@ -15,7 +15,7 @@ export default function List<T> (props: ListProps<T>) {
             {props.items.length === 0 ? 
                 <div className="list__empty">Здесь пока ничего нет...</div>
             :
-            <Fade cascade duration={300} triggerOnce={true} direction={'right'}>
+            <Fade cascade duration={300} triggerOnce={true} direction={'down'}>
                 {props.items.map(props.renderItem)}
             </Fade>                
             }           

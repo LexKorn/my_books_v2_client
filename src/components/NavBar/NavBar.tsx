@@ -5,8 +5,6 @@ import { observer } from 'mobx-react-lite';
 
 import {Context} from '../../index';
 import { FIRST_ROUTE, ADD_AUTHOR_ROUTE, ADD_BOOK_ROUTE, AUTHORS_ROUTE, NOTE_ROUTE, MANUAL_ROUTE } from "../../utils/consts";
-// import calcScroll from '../../utils/calcScroll';
-// import isScroll from '../../utils/isScroll';
 
 import './navBar.sass';
 
@@ -15,27 +13,12 @@ const NavBar = observer(() => {
     const {user} = useContext(Context);
     // const {library} = useContext(Context);
     const navigate = useNavigate();
-    // const [scroll, setScroll] = useState<boolean>(false);
 
     const logOut = () => {
         user.setIsAuth(false);
         localStorage.clear();
     };
 
-    // const scrollWidth = calcScroll();
-
-    // useEffect(() => {
-    //     setScroll(isScroll());
-        // console.log(isScroll());
-    // }, [library.toggleScroll]);
-
-    // const navi = (rout: string): void => {
-    //     navigate(rout);
-    //     setScroll(true); 
-    // };
-    // const marginRight: number = scroll ? scrollWidth : 0;
-    // style={{marginRigth: `${marginRigth}px`}}
-    // <Container style={!scroll ? {marginRight: scrollWidth} : {marginRight: 0}}>
 
     return (
         <>

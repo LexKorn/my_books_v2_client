@@ -16,14 +16,7 @@ import './authorBlock.sass';
 
 const AuthorBlock: React.FunctionComponent = () => {
     const {library} = useContext(Context);
-    const [author, setAuthor] = useState<IAuthor>({
-        id: 0,
-        name: '',
-        description: '',
-        photo: '',
-        userId: 0,
-        countryId: 0,        
-    });    
+    const [author, setAuthor] = useState<IAuthor>({} as IAuthor);    
     const [loading, setLoading] = useState<boolean>(true);
     const {id} = useParams<{id: string}>();
     const navigate = useNavigate();
@@ -69,11 +62,7 @@ const AuthorBlock: React.FunctionComponent = () => {
             <ModalAuthor 
                 show={visible} 
                 onHide={() => setVisible(false)} 
-                // @ts-ignore 
-                idInit={id} 
-                nameInit={author.name}
-                descriptionInit={author.description}
-                photoInit={author.photo}
+                author={author}
             />
         </div>
     );

@@ -19,7 +19,7 @@ const BookItem: React.FC<BookItemProps> = observer(({book, onClick}) => {
     if (authorBook.length > 0) {
         return (
             <Card 
-                className="d-flex justify-content-between shadow transition" 
+                className="d-flex justify-content-between shadow" 
                 style={{padding: 10, marginTop: 15, flexDirection: 'row', fontSize: 18, lineHeight: '35px', cursor: 'pointer'}}
                 onClick={() => onClick(book)}
             >
