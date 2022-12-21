@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import {Helmet} from "react-helmet";
+import {Button} from 'react-bootstrap';
 
 import { IAuthor, IBook } from '../../types/types';
 import { MAIN_ROUTE, AUTHOR_ROUTE, NOTFOUND_ROUTE } from '../../utils/consts';
@@ -43,6 +44,8 @@ const BookBlock: React.FunctionComponent = () => {
         }        
     };
 
+    const addQuote = () => {};
+
     if (loading) {
         return <Spinner animation={"border"}/>
     }    
@@ -67,7 +70,10 @@ const BookBlock: React.FunctionComponent = () => {
                     <div className="book__rating">{book.rating}</div>
                     <a className="book__link" href={book.link} target="_blank">Прочитать можно здесь &gt;&gt;</a><br/>
                     <button className='book__button' onClick={() => setVisible(true)}>Редактировать</button>
-                    <button className='book__button'  onClick={removeBook}>Удалить</button>
+                    <button className='book__button' onClick={removeBook}>Удалить</button>
+                    <button className='book__button' onClick={addQuote}>Добавить цитату</button>
+                    {/* <Button variant="outline-dark" onClick={() => setVisible(true)}>Редактировать</Button>
+                    <Button variant="outline-danger" onClick={removeBook}>Удалить</Button> */}
                     <div className="book__comment">{book.comment}</div>
                 </div>                
             </div>

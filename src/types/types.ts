@@ -1,9 +1,3 @@
-export interface INote {
-    id: number;
-    name: string;
-    userId: number;
-};
-
 export interface IAuthor {
     id: number;
     name: string;
@@ -28,5 +22,18 @@ export interface IBook {
 export interface ICountry {
     id: number;
     name: string;
+    userId: number;
+};
+
+export interface INote {
+    id: number;
+    name: string;
+    userId: number;
+};
+
+export interface IQuote {
+    id: number;
+    quote: string;
+    bookId: number;
     userId: number;
 };

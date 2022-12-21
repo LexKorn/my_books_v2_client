@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import {Helmet} from "react-helmet";
 
 import List from '../../components/List/List';
-import NoteItem from '../../components/NoteItem';
+import ListItem from '../../components/ListItem';
 import ModalNote from '../../components/Modals/ModalNote';
 import { INote } from '../../types/types';
 import {createNote, deleteNote, fetchNotes} from '../../http/noteAPI';
@@ -80,10 +80,10 @@ const NotesPage: React.FC = observer(() => {
                 <List 
                     items={notes} 
                     renderItem={(note: INote) => 
-                        <NoteItem 
+                        <ListItem 
                             onDelete={() => removeNote(note)} 
                             onEdit={() => editNote(note)} 
-                            note={note} 
+                            item={note} 
                             key={note.id} 
                         />
                     } 

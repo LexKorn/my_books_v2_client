@@ -1,32 +1,33 @@
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
 
-import { INote } from '../types/types';
+import { INote, IQuote } from '../types/types';
 
-interface NoteItemProps {
-    note: INote;
-    onDelete: (note: INote) => void;
-    onEdit: (note: INote) => void;
+interface ListItemProps {
+    item: IQuote | INote;
+    onDelete: (item: IQuote | INote) => void;
+    onEdit: (item: IQuote | INote) => void;
 };
 
 
-const NoteItem: React.FC<NoteItemProps> = ({note, onDelete, onEdit}) => {
+const ListItem: React.FC<ListItemProps> = ({item, onDelete, onEdit}) => {
     return (
         <Card 
             className="d-flex justify-content-between shadow transition" 
             style={{padding: 10, marginTop: 15, flexDirection: 'row', fontSize: 18, lineHeight: '35px'}}
         >
-            <div>{note.name}</div>
+            {/* @ts-ignore */}
+            <div>{item.name ? item.name : item.quote}</div>
             <div>
                 <Button 
                     variant={"outline-secondary"}
                     style={{marginRight: 10}}
-                    onClick={() => onEdit(note)}
+                    onClick={() => onEdit(item)}
                     >Редактировать
                 </Button>
                 <Button 
                     variant={"outline-danger"}
-                    onClick={() => onDelete(note)}
+                    onClick={() => onDelete(item)}
                     >Удалить
                 </Button>
             </div>
@@ -34,4 +35,4 @@ const NoteItem: React.FC<NoteItemProps> = ({note, onDelete, onEdit}) => {
     );
 };
 
-export default NoteItem;
+export default ListItem;
