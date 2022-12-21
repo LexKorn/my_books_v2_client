@@ -16,7 +16,7 @@ const Statistics: React.FC = () => {
 
     return (
         <>
-            <div className='statistics'>У меня добавлено на портал: {quantityAuthors} авторов и {quantityBooks} книг</div>
+            <div className='statistics'>Статистика: у меня добавлено на портал {quantityAuthors} авторов и {quantityBooks} книг</div>
         </>
     );
 };

@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 import {Helmet} from "react-helmet";
 
 import List from '../../components/List/List';
-import ListItem from '../../components/ListItem';
+import ListItem from '../../components/ListItem/ListItem';
 import ModalNote from '../../components/Modals/ModalNote';
 import { INote } from '../../types/types';
 import {createNote, deleteNote, fetchNotes} from '../../http/noteAPI';
@@ -18,10 +18,11 @@ const NotesPage: React.FC = observer(() => {
     const [loading, setLoading] = useState<boolean>(true);
     const [visible, setVisible] = useState<boolean>(false);
     const [note, setNote] = useState<INote>({} as INote);
+    const [refresh, setRefresh] = useState<boolean>(false);
 
     useEffect(() => {
         getNotes();
-    }, [value, visible]);
+    }, [refresh, visible]);
 
     async function getNotes() {
         fetchNotes()
@@ -32,7 +33,10 @@ const NotesPage: React.FC = observer(() => {
 
     const addNote = () => {
         createNote(value)
-            .then(() => setValue(''))
+            .then(() => {
+                setValue('');
+                setRefresh(!refresh);
+            })
             .catch(err => alert(err.message)); 
     };    
 

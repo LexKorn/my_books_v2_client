@@ -1,10 +1,9 @@
 import React, {useContext} from 'react';
-import { Card, Image } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import {observer} from 'mobx-react-lite';
 
 import { IAuthor, IBook } from '../types/types';
 import { Context } from '../index';
-const star = require('../assets/star.png');
 
 interface BookItemProps {
     book: IBook;
@@ -24,7 +23,7 @@ const BookItem: React.FC<BookItemProps> = observer(({book, onClick}) => {
                 onClick={() => onClick(book)}
             >
                 <div><span style={{fontWeight: 'bold'}}>{book.name}</span> - {authorBook[0].name} </div> 
-                <div>{book.rating} <Image width={18} height={18} src={star}/></div>
+                <div>{book.rating} <i className="bi bi-star"></i></div>
             </Card>        
         );
     } else {

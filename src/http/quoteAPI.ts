@@ -1,7 +1,7 @@
 import { $authHost } from "./index";
 
-export const createQuote = async (quote: FormData) => {
-    const {data} = await $authHost.post('api/quote', quote);    
+export const createQuote = async (quote: string, bookId: string) => {
+    const {data} = await $authHost.post('api/quote', {quote, bookId});    
     return data;
 };
 
@@ -20,7 +20,7 @@ export const deleteQuote = async (id: number) => {
     return data;
 };
 
-export const updateQuote = async (id: number, quote: FormData) => {
-    const {data} = await $authHost.put('api/quote/' + id, quote);
+export const updateQuote = async (id: number, quote: string, bookId: number) => {
+    const {data} = await $authHost.put('api/quote/' + id, {quote, bookId});
     return data;
 };

@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Spinner } from 'react-bootstrap';
 import {Helmet} from "react-helmet";
-import {Button} from 'react-bootstrap';
 
 import { IAuthor, IBook } from '../../types/types';
 import { MAIN_ROUTE, AUTHOR_ROUTE, NOTFOUND_ROUTE } from '../../utils/consts';
@@ -11,6 +10,7 @@ import { deleteBook, fetchOneBook } from '../../http/bookAPI';
 import { fetchAuthors } from '../../http/authorAPI';
 import {Context} from '../../index';
 import ModalBook from '../Modals/ModalBook';
+import ModalQuoteAdd from '../Modals/ModalQuoteAdd';
 
 import './bookBlock.sass';
 
@@ -22,6 +22,7 @@ const BookBlock: React.FunctionComponent = () => {
     const {id} = useParams<{id: string}>();
     const navigate = useNavigate();
     const [visible, setVisible] = useState<boolean>(false);
+    const [visibleQuote, setVisibleQuote] = useState<boolean>(false);
     
     useEffect(() => {
         fetchAuthors().then(data => library.setAuthors(data));
@@ -43,8 +44,6 @@ const BookBlock: React.FunctionComponent = () => {
             navigate(MAIN_ROUTE);
         }        
     };
-
-    const addQuote = () => {};
 
     if (loading) {
         return <Spinner animation={"border"}/>
@@ -71,9 +70,7 @@ const BookBlock: React.FunctionComponent = () => {
                     <a className="book__link" href={book.link} target="_blank">Прочитать можно здесь &gt;&gt;</a><br/>
                     <button className='book__button' onClick={() => setVisible(true)}>Редактировать</button>
                     <button className='book__button' onClick={removeBook}>Удалить</button>
-                    <button className='book__button' onClick={addQuote}>Добавить цитату</button>
-                    {/* <Button variant="outline-dark" onClick={() => setVisible(true)}>Редактировать</Button>
-                    <Button variant="outline-danger" onClick={removeBook}>Удалить</Button> */}
+                    <button className='book__button' onClick={() => setVisibleQuote(true)}>Добавить цитату</button>
                     <div className="book__comment">{book.comment}</div>
                 </div>                
             </div>
@@ -81,6 +78,11 @@ const BookBlock: React.FunctionComponent = () => {
                 show={visible} 
                 onHide={() => setVisible(false)} 
                 book={book}
+            />
+            <ModalQuoteAdd
+                show={visibleQuote} 
+                onHide={() => setVisibleQuote(false)} 
+                bookId={book.id}
             />
         </div>
     );
