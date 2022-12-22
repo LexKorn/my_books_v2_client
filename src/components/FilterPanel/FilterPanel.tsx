@@ -27,6 +27,16 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
     useEffect(() => {
         fetchCountries().then(data => setCountries(data));
     }, []);
+
+    useEffect(() => {
+        if (isMain) {
+            // @ts-ignore 
+            library.setVisibleBooks(sort(filterPost(search(elems, value), filter)));
+        } else {
+            // @ts-ignore 
+            library.setVisibleAuthors(sort(filterPost(search(elems, value), filter)));
+        }
+    }, [value, elems, filter]);
         
     const arrAuthorId: number[] = library.books.map(book => book.authorId);
     
@@ -38,7 +48,7 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
     const Russia: ICountry[] = countries.filter(country => country.name === 'Россия');
     const USSR: ICountry[] = countries.filter(country => country.name === 'СССР');   
 
-    const search = (items: (IAuthor | IBook)[], term: string) => {
+    function search(items: (IAuthor | IBook)[], term: string) {
         if (term.length === 0) {
             return items;
         }
@@ -48,7 +58,7 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
         });
     };
 
-    const filterPost = (items: (IAuthor | IBook)[], filter: string) => {
+    function filterPost(items: (IAuthor | IBook)[], filter: string) {
         switch (filter) {
             case 'Отечественные':
                 if (Russia.length > 0 && USSR.length > 0) {
@@ -81,7 +91,7 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
         }
     };
 
-    const sort = (items: (IAuthor | IBook)[]) => {        
+    function sort(items: (IAuthor | IBook)[]) {        
         let sortItems: (IAuthor | IBook)[] = [];
 
         sortItems = [...items].sort((a, b) => {
@@ -90,14 +100,6 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
 
         return sortItems;
     };
-
-    if (isMain) {
-        // @ts-ignore 
-        library.setVisibleBooks(sort(filterPost(search(elems, value), filter)));
-    } else {
-        // @ts-ignore 
-        library.setVisibleAuthors(sort(filterPost(search(elems, value), filter)));
-    }
 
 
     return (
