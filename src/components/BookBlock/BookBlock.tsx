@@ -10,7 +10,6 @@ import { deleteBook, fetchOneBook } from '../../http/bookAPI';
 import { fetchAuthors } from '../../http/authorAPI';
 import {Context} from '../../index';
 import ModalBook from '../Modals/ModalBook';
-import ModalQuoteAdd from '../Modals/ModalQuoteAdd';
 
 import './bookBlock.sass';
 
@@ -22,7 +21,6 @@ const BookBlock: React.FunctionComponent = () => {
     const {id} = useParams<{id: string}>();
     const navigate = useNavigate();
     const [visible, setVisible] = useState<boolean>(false);
-    const [visibleQuote, setVisibleQuote] = useState<boolean>(false);
     
     useEffect(() => {
         fetchAuthors().then(data => library.setAuthors(data));
@@ -70,7 +68,6 @@ const BookBlock: React.FunctionComponent = () => {
                     <a className="book__link" href={book.link} target="_blank">Прочитать можно здесь &gt;&gt;</a><br/>
                     <button className='book__button' onClick={() => setVisible(true)}>Редактировать</button>
                     <button className='book__button' onClick={removeBook}>Удалить</button>
-                    <button className='book__button' onClick={() => setVisibleQuote(true)}>Добавить цитату</button>
                     <div className="book__comment">{book.comment}</div>
                 </div>                
             </div>
@@ -78,11 +75,6 @@ const BookBlock: React.FunctionComponent = () => {
                 show={visible} 
                 onHide={() => setVisible(false)} 
                 book={book}
-            />
-            <ModalQuoteAdd
-                show={visibleQuote} 
-                onHide={() => setVisibleQuote(false)} 
-                bookId={book.id}
             />
         </div>
     );

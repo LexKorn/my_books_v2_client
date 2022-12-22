@@ -8,6 +8,9 @@ import { fetchOneBook } from '../../http/bookAPI';
 import List from '../List/List';
 import ListItem from '../ListItem/ListItem';
 import ModalQuoteUpdate from '../Modals/ModalQuoteUpdate';
+import ModalQuoteAdd from '../Modals/ModalQuoteAdd';
+
+import './quotesList.sass';
 
 
 export default function QuotesList<T> () {
@@ -15,19 +18,22 @@ export default function QuotesList<T> () {
     const [quotes, setQuotes] = useState<IQuote[]>([]);
     const [book, setBook] = useState<IBook>({} as IBook);
     const [toggle, setToggle] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [visible, setVisible] = useState<boolean>(false);
+    const [visibleQuote, setVisibleQuote] = useState<boolean>(false);
     const {id} = useParams();
 
     useEffect(() => {
         fetchQuotes()
             .then(data => setQuotes(data))
-            .catch(err => alert(err.message))
-    }, [toggle, visible]);
+            .catch(err => alert(err.message));
+    }, [toggle, visible, visibleQuote]);
 
     useEffect(() => {
         fetchOneBook(id)
             .then(data => setBook(data))
             .catch(err => alert(err.message))
+            .finally(() => setLoading(false));
     }, []);
 
     const bookQuotes: IQuote[] = quotes.filter(quote => quote.bookId === book.id);
@@ -46,8 +52,11 @@ export default function QuotesList<T> () {
 
 
     return (
-        <Container className="quotes mt-4">
-            <h3 style={{textAlign: 'center'}}>Цитаты:</h3>
+        <Container className="quotes">
+            {!loading && <div className="quotes__title">
+                <h3>Цитаты:</h3>
+                <i className="bi bi-plus-circle quotes__title_icon" onClick={() => setVisibleQuote(true)}></i>
+            </div>}
             <List 
                 items={bookQuotes} 
                 renderItem={(quote: IQuote) => 
@@ -58,6 +67,11 @@ export default function QuotesList<T> () {
                         key={quote.id} 
                     />
                 } 
+            />
+            <ModalQuoteAdd
+                show={visibleQuote} 
+                onHide={() => setVisibleQuote(false)} 
+                bookId={book.id}
             />
             <ModalQuoteUpdate
                 show={visible} 
