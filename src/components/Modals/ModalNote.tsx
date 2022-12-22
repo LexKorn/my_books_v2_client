@@ -12,7 +12,7 @@ interface ModalNoteProps {
 
 
 const ModalNote: React.FC<ModalNoteProps> = ({show, onHide, note}) => {
-    const [name, setName] = useState<string>(' ');
+    const [name, setName] = useState<string>('');
 
     useEffect(() => {
         setName(note.name);
@@ -35,7 +35,7 @@ const ModalNote: React.FC<ModalNoteProps> = ({show, onHide, note}) => {
     const keyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            alert('Поле обязательно для заполнения');
+            editNote();
         }
     };
 
@@ -64,7 +64,7 @@ const ModalNote: React.FC<ModalNoteProps> = ({show, onHide, note}) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant={"outline-danger"} onClick={editNote}>Обновить</Button>
+                <Button variant={"outline-primary"} onClick={() => editNote()}>Обновить</Button>
                 <Button variant={"outline-secondary"} onClick={onHide}>Закрыть</Button>
             </Modal.Footer>
         </Modal>
