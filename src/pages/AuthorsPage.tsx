@@ -17,8 +17,6 @@ const AuthorsPage: React.FC = observer(() => {
     const {library} = useContext(Context);
     const [authors, setAuthors] = useState<IAuthor[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const [value, setValue] = useState<string>('');
-    const [filter, setFilter] = useState<string>('Все');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -41,7 +39,7 @@ const AuthorsPage: React.FC = observer(() => {
             </Helmet>
 
             <Statistics />
-            <FilterPanel value={value} setValue={setValue} filter={filter} setFilter={setFilter} elems={authors} />
+            <FilterPanel elems={authors} />
             <h1 style={{textAlign: 'center'}}>Список добавленных авторов:</h1>
             {loading ? <Spinner animation={"border"}/> :
                 <List

@@ -2,8 +2,10 @@ import React, {useContext} from 'react';
 import { Card } from 'react-bootstrap';
 import {observer} from 'mobx-react-lite';
 
-import { IAuthor, IBook } from '../types/types';
-import { Context } from '../index';
+import { IAuthor, IBook } from '../../types/types';
+import { Context } from '../../index';
+
+import './bookItem.sass';
 
 interface BookItemProps {
     book: IBook;
@@ -18,12 +20,11 @@ const BookItem: React.FC<BookItemProps> = observer(({book, onClick}) => {
     if (authorBook.length > 0) {
         return (
             <Card 
-                className="d-flex justify-content-between shadow" 
-                style={{padding: 10, marginTop: 15, flexDirection: 'row', fontSize: 18, lineHeight: '35px', cursor: 'pointer'}}
+                className="book-item shadow"
                 onClick={() => onClick(book)}
             >
-                <div><span style={{fontWeight: 'bold'}}>{book.name}</span> - {authorBook[0].name} </div> 
-                <div>{book.rating} <i className="bi bi-star"></i></div>
+                <div className='book-item__title'><span>{book.name}</span> - {authorBook[0].name} </div> 
+                <div className='book-item__rating'>{book.rating} <i className="bi bi-star"></i></div>
             </Card>        
         );
     } else {

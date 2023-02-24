@@ -5,7 +5,7 @@ import {observer} from 'mobx-react-lite';
 import {Helmet} from "react-helmet";
 
 import List from '../components/List/List';
-import BookItem from '../components/BookItem';
+import BookItem from '../components/BookItem/BookItem';
 import FilterPanel from '../components/FilterPanel/FilterPanel';
 import Statistics from '../components/Statistics/Statistics';
 import { IBook } from '../types/types';
@@ -17,8 +17,6 @@ import { Context } from '../index';
 const MainPage: React.FC = observer(() => {
     const {library} = useContext(Context);
     const [loading, setLoading] = useState<boolean>(true);
-    const [value, setValue] = useState<string>('');
-    const [filter, setFilter] = useState<string>('Все');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -42,7 +40,7 @@ const MainPage: React.FC = observer(() => {
             </Helmet>
 
             <Statistics />
-            <FilterPanel value={value} setValue={setValue} filter={filter} setFilter={setFilter} elems={library.books} />
+            <FilterPanel elems={library.books} />
             <h1 style={{textAlign: 'center'}}>Список добавленных книг:</h1>
             {loading ? <Spinner animation={"border"}/> :
                 <List 

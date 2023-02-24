@@ -1,0 +1,18 @@
+.book-item
+    display: flex
+    flex-direction: row
+    justify-content: space-between
+    margin-top: 15px
+    padding: 10px
+    font-size: 18px
+    line-height: 35px
+    cursor: pointer
+    &__title
+        span
+            font-weight: bold
+    &__rating
+        width: 50px
+
+@media (max-width: 576px)
+    .book-item
+        flex-direction: column

@@ -10,16 +10,14 @@ import { MAIN_ROUTE } from '../../utils/consts';
 import './filterPanel.sass';
 
 interface FilterPanelProps {
-    value: string;
-    setValue: (value: string) => void;
-    filter: string;
-    setFilter: (value: string) => void;
     elems: (IAuthor | IBook)[];
 };
 
 
-const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filter, setFilter, elems}) => {
+const FilterPanel:React.FC<FilterPanelProps> = observer(({elems}) => {
     const {library} = useContext(Context);
+    const [value, setValue] = useState<string>('');
+    const [filter, setFilter] = useState<string>('Все');
     const [countries, setCountries] = useState<ICountry[]>([]);
     const location = useLocation();
     const isMain = location.pathname === MAIN_ROUTE;
@@ -36,7 +34,7 @@ const FilterPanel:React.FC<FilterPanelProps> = observer(({value, setValue, filte
             // @ts-ignore 
             library.setVisibleAuthors(sort(filterPost(search(elems, value), filter)));
         }
-    }, [value, elems, filter]);
+    }, [value, filter, elems]);
         
     const arrAuthorId: number[] = library.books.map(book => book.authorId);
     
