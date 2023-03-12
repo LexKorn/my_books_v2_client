@@ -43,16 +43,14 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
     };
 
     const onClick = () => {
-        if (!name.trim() || !comment.trim()) {
-            return alert('Все поля обязательны для заполнения');
+        if (!name.trim()) {
+            return alert('Название книги обязательно для заполнения');
         } else if (!library.selectedAuthor.id) {
             return alert('Автора необходимо указать');
-        } else if (!file) {
-            return alert('Обложку необходимо загрузить');
         } else if (rating < 1 || rating > 10) {
             return alert ('Оценка книги должна быть от 1 до 10');
-        } else if (!isValidUrl(link)) {
-            return alert ('Неверный формат ссылки');
+        // } else if (!isValidUrl(link)) {
+        //     return alert ('Неверный формат ссылки');
         }
 
         const formData = new FormData();

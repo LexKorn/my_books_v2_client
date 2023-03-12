@@ -9,7 +9,7 @@ import CUBook from '../components/CUBook';
 const AddBookPage: React.FC = observer(() => {
     const [name, setName] = useState<string>('');
     const [link, setLink] = useState<string>('');
-    const [rating, setRating] = useState<number>(1);
+    const [rating, setRating] = useState<number>(5);
     const [comment, setComment] = useState<string>('');
     const [file, setFile] = useState<string>('');
 

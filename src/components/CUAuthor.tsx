@@ -39,10 +39,8 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
     };
 
     const onClick = () => {
-        if (!name.trim() || !description.trim()) {
-            return alert('Все поля обязательны для заполнения');
-        } else if (!file) {
-            return alert('Фото необходимо загрузить');
+        if (!name.trim()) {
+            return alert('Имя автора обязательно для заполнения');
         } else if (!library.selectedCountry.id) {
             return alert('Страну необходимо указать');        
         }
