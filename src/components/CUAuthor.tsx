@@ -34,6 +34,16 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
     const selectFile = (e: React.ChangeEvent<HTMLInputElement>) => { 
         const files: FileList | null = e.target.files;
         if (files) {
+            if (files[0].size > 1048576) {
+                return alert('Изображение должно быть менее 1мб')
+            }
+            // @ts-ignore 
+            const fileExtension: string = files[0].name.split(".").at(-1);
+            const allowedFileTypes: string[] = ["jpg", "jpeg", "png", "webp"];
+            if (!allowedFileTypes.includes(fileExtension)) {
+                return alert(`Расширение файла не поддерживается. Допустымые расширения: ${allowedFileTypes.join(", ")}`);
+            }
+
             setFile(files[0]);
         }        
     };
@@ -99,6 +109,7 @@ const CUAuthor: React.FC<CUAuthorProps> = observer(({id, name, description, file
                     <label htmlFor="file" className="mt-3">Загрузите фото автора</label>       
                     <Form.Control                        
                         type="file"
+                        accept="image/*"
                         onChange={selectFile}
                     />                    
                     <Dropdown className="mt-3 mb-3">

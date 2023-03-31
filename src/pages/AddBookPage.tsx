@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { observer } from 'mobx-react-lite';
 import {Helmet} from "react-helmet";
 
 import { createBook } from '../http/bookAPI';
 import CUBook from '../components/CUBook';
 
 
-const AddBookPage: React.FC = observer(() => {
+const AddBookPage: React.FC = () => {
     const [name, setName] = useState<string>('');
     const [link, setLink] = useState<string>('');
     const [rating, setRating] = useState<number>(5);
@@ -39,6 +38,6 @@ const AddBookPage: React.FC = observer(() => {
             />
         </>
     );
-});
+};
 
 export default AddBookPage;

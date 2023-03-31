@@ -5,8 +5,7 @@ import { observer } from 'mobx-react-lite';
 
 import { Context } from '../index';
 import { fetchAuthors } from '../http/authorAPI';
-import { ADD_AUTHOR_ROUTE, MAIN_ROUTE } from '../utils/consts';
-import {isValidUrl} from '../utils/validURL';
+import { ADD_AUTHOR_ROUTE, MAIN_ROUTE, AUTHOR_ROUTE } from '../utils/consts';
 import { IAuthor } from '../types/types';
 
 interface CUBookProps {
@@ -38,8 +37,18 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
     const selectFile = (e: React.ChangeEvent<HTMLInputElement>) => { 
         const files: FileList | null = e.target.files;
         if (files) {
+            if (files[0].size > 1048576) {
+                return alert('Изображение должно быть менее 1мб')
+            }
+            // @ts-ignore 
+            const fileExtension: string = files[0].name.split(".").at(-1);
+            const allowedFileTypes: string[] = ["jpg", "jpeg", "png", "webp"];
+            if (!allowedFileTypes.includes(fileExtension)) {
+                return alert(`Расширение файла не поддерживается. Допустымые расширения: ${allowedFileTypes.join(", ")}`);
+            }
+
             setFile(files[0]);
-        }                
+        }        
     };
 
     const onClick = () => {
@@ -65,13 +74,13 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
         if (btnName === 'Добавить') {
             // @ts-ignore 
             handler(formData).then(() => {
+                navigate(AUTHOR_ROUTE + '/' + library.selectedAuthor.id);
                 library.setSelectedAuthor({} as IAuthor);
-                navigate(MAIN_ROUTE);
             });
         } else {
             handler(id, formData).then(() => {
+                navigate(AUTHOR_ROUTE + '/' + library.selectedAuthor.id);
                 library.setSelectedAuthor({} as IAuthor);
-                navigate(MAIN_ROUTE);
             });
         }
     };
@@ -110,6 +119,7 @@ const CUBook: React.FC<CUBookProps> = observer(({id, name, link, rating, comment
                     <label htmlFor="file" className="mt-3">Загрузите обложку книги</label>       
                     <Form.Control                        
                         type="file"
+                        accept="image/*"
                         onChange={selectFile}
                     />                    
                     <Dropdown className="mt-3 mb-3">

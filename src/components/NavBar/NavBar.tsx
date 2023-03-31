@@ -24,16 +24,11 @@ const NavBar = observer(() => {
             {user.isAuth ?
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" sticky="top" >
                     <Container >
-                        <NavLink className="active" to={MAIN_ROUTE}>МОИ КНИГИ</NavLink>
+                        <NavLink className="active nav-authors" to={MAIN_ROUTE}>КНИГИ</NavLink>
+                        <NavLink className="active" to={AUTHORS_ROUTE}>АВТОРЫ</NavLink>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                         <Navbar.Collapse id="responsive-navbar-nav" className='justify-content-around'>
                                 <div className='buttons'>
-                                    <Button
-                                        variant={"outline-light"}
-                                        className="me-2 nav-btn"
-                                        onClick={() => navigate(AUTHORS_ROUTE)}
-                                        >Список авторов
-                                    </Button>
                                     <Button
                                         variant={"outline-light"}
                                         className="me-2 nav-btn"

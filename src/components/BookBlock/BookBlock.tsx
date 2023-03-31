@@ -65,7 +65,10 @@ const BookBlock: React.FunctionComponent = () => {
                     </div>
                     <div className="book__name">{book.name}</div>
                     <div className="book__rating">{book.rating}</div>
-                    <a className="book__link" href={book.link} target="_blank">Прочитать можно здесь &gt;&gt;</a><br/>
+                    {book.link &&
+                        <a className="book__link" href={book.link} target="_blank">Прочитать можно здесь &gt;&gt;</a>
+                    }
+                    <br/>
                     <button className='book__button' onClick={() => setVisible(true)}>Редактировать</button>
                     <button className='book__button' onClick={removeBook}>Удалить</button>
                     <div className="book__comment">{book.comment}</div>

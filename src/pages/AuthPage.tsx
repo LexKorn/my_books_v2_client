@@ -1,7 +1,6 @@
 import React, {useState, useContext} from 'react';
 import {Container, Form, Card, Button} from 'react-bootstrap';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
-import {observer} from 'mobx-react-lite';
 import {AxiosError} from 'axios';
 import {Helmet} from "react-helmet";
 
@@ -10,7 +9,7 @@ import { login, registration } from '../http/userAPI';
 import {Context} from '../index';
 
 
-const AuthPage: React.FC = observer(() => {
+const AuthPage: React.FC = () => {
     const {user} = useContext(Context);
     const location = useLocation();
     const navigate = useNavigate();
@@ -90,6 +89,6 @@ const AuthPage: React.FC = observer(() => {
             </Card>
         </Container>
     );
-});
+};
 
 export default AuthPage;

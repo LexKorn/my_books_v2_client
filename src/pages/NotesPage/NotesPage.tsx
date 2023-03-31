@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {Form, Container, Spinner} from 'react-bootstrap';
-import { observer } from 'mobx-react-lite';
 import {Helmet} from "react-helmet";
 
 import List from '../../components/List/List';
@@ -12,7 +11,7 @@ import {createNote, deleteNote, fetchNotes} from '../../http/noteAPI';
 import './notesPage.sass';
 
 
-const NotesPage: React.FC = observer(() => {
+const NotesPage: React.FC = () => {
     const [value, setValue] = useState<string>('');
     const [notes, setNotes] = useState<INote[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
@@ -95,6 +94,6 @@ const NotesPage: React.FC = observer(() => {
             <ModalNote show={visible} onHide={() => setVisible(false)} note={note} />            
         </Container>            
     );
-});
+};
 
 export default NotesPage;
